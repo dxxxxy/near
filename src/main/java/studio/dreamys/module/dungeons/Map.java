@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec4b;
 import net.minecraft.world.storage.MapData;
@@ -20,12 +19,14 @@ import studio.dreamys.module.Module;
 import studio.dreamys.near;
 import studio.dreamys.settings.Setting;
 
+//https://github.com/EisPaprika/HypixelDungeonMap
 public class Map extends Module {
     public Map() {
         super("Map", Category.DUNGEONS);
+
+        near.settingsManager.rSetting(new Setting("Scale", this,1, 0.1, 3, false));
         near.settingsManager.rSetting(new Setting("Background", this,false));
         near.settingsManager.rSetting(new Setting("Players", this,true));
-        near.settingsManager.rSetting(new Setting("Scale", this,1, 0.1, 3, false));
     }
 
     static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
@@ -46,44 +47,37 @@ public class Map extends Module {
         double x = near.settingsManager.getSettingByName(this, "Background").getValBoolean() ? 10: 0;
         double y = near.settingsManager.getSettingByName(this, "Background").getValBoolean() ? 10 :0;
         float scale = (float) near.settingsManager.getSettingByName(this, "Scale").getValDouble();
-        try {
-            ItemStack[] items = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
-            for (ItemStack item : items) {
-                if (item != null) {
-                    if (item.getItem().isMap()) {
-                        if (item.getItem() instanceof ItemMap) {
-                            ItemMap mapItem = (ItemMap) item.getItem();
-                            mapData = mapItem.getMapData(item, Minecraft.getMinecraft().thePlayer.getEntityWorld());
-                        }
+        ItemStack[] items = Minecraft.getMinecraft().thePlayer.inventory.mainInventory;
+        for (ItemStack item : items) {
+            if (item != null) {
+                if (item.getItem().isMap()) {
+                    if (item.getItem() instanceof ItemMap) {
+                        ItemMap mapItem = (ItemMap) item.getItem();
+                        mapData = mapItem.getMapData(item, Minecraft.getMinecraft().thePlayer.getEntityWorld());
                     }
                 }
             }
+        }
 
-        } catch (Exception e) {
-            Minecraft.getMinecraft().thePlayer
-                    .addChatMessage(new ChatComponentText("Error loading map! Check your console!"));
+        if (mapData == null) {
             return;
         }
 
-        if (mapData == null)
-            return;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, 0.0);
+        GlStateManager.scale(scale, scale, 1);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        if (near.settingsManager.getSettingByName(this, "Background").getValBoolean()) {
+            drawMapBackground();
+        }
 
-        try {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(x, y, 0.0);
-            GlStateManager.scale(scale, scale, 1);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            if (near.settingsManager.getSettingByName(this, "Background").getValBoolean())
-                drawMapBackground();
+        Minecraft.getMinecraft().entityRenderer.getMapItemRenderer().renderMap(mapData, true);
 
-            Minecraft.getMinecraft().entityRenderer.getMapItemRenderer().renderMap(mapData, true);
-
-            if (near.settingsManager.getSettingByName(this, "Players").getValBoolean())
+        if (near.settingsManager.getSettingByName(this, "Players").getValBoolean()) {
             drawPlayersOnMap();
-            GlStateManager.popMatrix();
-        } catch (Error error) {
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Error! Check your console!"));
         }
+
+        GlStateManager.popMatrix();
     }
 
     // source: net.minecraft.client.gui/mapItemRenderer

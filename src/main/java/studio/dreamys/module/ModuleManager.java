@@ -4,9 +4,13 @@ import studio.dreamys.module.chat.Compact;
 import studio.dreamys.module.chat.Hide;
 import studio.dreamys.module.cosmetics.DragonWings;
 import studio.dreamys.module.dungeons.Map;
+import studio.dreamys.module.hud.ClickGUI;
+import studio.dreamys.module.hud.SummonsHUD;
 import studio.dreamys.module.misc.KneeSurgery;
 import studio.dreamys.module.movement.KeepSprint;
-import studio.dreamys.module.render.*;
+import studio.dreamys.module.render.Fullbright;
+import studio.dreamys.module.render.ShortDamage;
+import studio.dreamys.module.render.SlayerESP;
 
 import java.util.ArrayList;
 

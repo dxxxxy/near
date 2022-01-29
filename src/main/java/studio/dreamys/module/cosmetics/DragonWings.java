@@ -20,21 +20,23 @@ import java.awt.*;
 public class DragonWings extends Module {
     public DragonWings() {
         super("Dragon Wings", Category.COSMETICS);
+
         near.settingsManager.rSetting(new Setting("Scale", this, 1, 0.1, 3, false));
         near.settingsManager.rSetting(new Setting("Color", this, 1, 1, 255, true));
         near.settingsManager.rSetting(new Setting("Chroma", this, false));
     }
 
     @Override
-    public void onEnable() {
+    public void onEnable() { //override because inner class
         MinecraftForge.EVENT_BUS.register(new RenderWings());
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable() { //override because inner class
         MinecraftForge.EVENT_BUS.unregister(new RenderWings());
     }
 
+    //https://github.com/Canelex/DragonWingsMod
     public static class RenderWings extends ModelBase {
         private final Minecraft mc;
         private final ResourceLocation location;

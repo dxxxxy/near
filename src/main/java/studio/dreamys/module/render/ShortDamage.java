@@ -25,8 +25,10 @@ public class ShortDamage extends Module {
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent e) {
         if (e.entity instanceof EntityArmorStand) {
             Matcher m = Pattern.compile("✧(.*)✧").matcher(ChatFormatting.stripFormatting(e.entity.getName().toLowerCase()));
-            if (m.find() && !Pattern.compile("[a-z]").matcher(ChatFormatting.stripFormatting(e.entity.getName().toLowerCase())).find())
+            //if crit damage found && not already formatted
+            if (m.find() && !Pattern.compile("[a-z]").matcher(ChatFormatting.stripFormatting(e.entity.getName().toLowerCase())).find()) {
                 e.entity.setCustomNameTag(formatDamage(Double.parseDouble(m.group(1))));
+            }
         }
     }
 
@@ -38,7 +40,7 @@ public class ShortDamage extends Module {
         else if (dmg >= 1000) formattedDamage = BigDecimal.valueOf(dmg / 1000).setScale(1, RoundingMode.HALF_UP).doubleValue() + "k"; //thousands
         else formattedDamage = Double.toString(dmg); //hundreds
 
-        //color formatting
+        //color formatting (tried to replicate hypixel)
         StringBuilder sb = new StringBuilder(formattedDamage);
         for (int i = 0; i < formattedDamage.length(); i++) {
             sb.insert(i * 3, colors.get(i % 5));

@@ -1,4 +1,4 @@
-package studio.dreamys.module.render;
+package studio.dreamys.module.hud;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.input.Keyboard;
@@ -9,15 +9,15 @@ import studio.dreamys.near;
 import java.io.IOException;
 
 public class ClickGUI extends Module {
-
     public ClickGUI() {
         super("ClickGUI", Category.HUD);
+
         setKey(Keyboard.KEY_RSHIFT);
     }
 
     @Override
     public void onEnable() throws IOException {
         Minecraft.getMinecraft().displayGuiScreen(near.clickGUI);
-        setToggled(false);
+        setToggled(false); //unclickable effect
     }
 }

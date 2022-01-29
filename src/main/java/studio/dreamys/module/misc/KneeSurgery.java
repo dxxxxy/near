@@ -7,7 +7,6 @@ import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
 import studio.dreamys.settings.Setting;
-import studio.dreamys.util.PlayerUtils;
 
 public class KneeSurgery extends Module {
     public KneeSurgery() {
@@ -29,7 +28,6 @@ public class KneeSurgery extends Module {
     public void onDisable() {
         super.onDisable();
         if (Minecraft.getMinecraft().thePlayer == null) return;
-        PlayerUtils.addMessage("hi");
         Minecraft.getMinecraft().thePlayer.eyeHeight = Minecraft.getMinecraft().thePlayer.getDefaultEyeHeight();
     }
 }

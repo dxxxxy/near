@@ -7,8 +7,9 @@ import studio.dreamys.module.Module;
 public class Fullbright extends Module {
     public Fullbright() {
         super("Fullbright", Category.RENDER);
-        if (Minecraft.getMinecraft().gameSettings.gammaSetting != 1 && Minecraft.getMinecraft().gameSettings.gammaSetting != 15)
+        if (Minecraft.getMinecraft().gameSettings.gammaSetting != 1 && Minecraft.getMinecraft().gameSettings.gammaSetting != 15) {
             Minecraft.getMinecraft().gameSettings.gammaSetting = 1;
+        }
     }
 
     @Override

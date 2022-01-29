@@ -14,8 +14,9 @@ public class KeepSprint extends Module {
 
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (Minecraft.getMinecraft().thePlayer != null)
+        if (Minecraft.getMinecraft().thePlayer != null) {
             KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindSprint.getKeyCode(), true);
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
 
+//https://github.com/Sk1erLLC/CompactChat
 public class Compact extends Module {
     private String lastMessage = "";
     private int line, amount;

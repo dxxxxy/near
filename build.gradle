@@ -87,3 +87,11 @@ reobf {
     //reobfuscate the shadowed jar
     shadowJar {}
 }
+
+jar {
+    manifest {
+        attributes "FMLCorePlugin": "studio.dreamys.asm.FMLLoadingPlugin",
+                "ModSide": "CLIENT",
+                "FMLCorePluginContainsFMLMod": "Yes, yes it does"
+    }
+}
