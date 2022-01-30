@@ -9,10 +9,8 @@ import studio.dreamys.asm.ClassTransformer;
 import java.util.Map;
 
 public class MixinLoader implements IFMLLoadingPlugin {
-
     public MixinLoader() {
-        System.out.println("[LiquidBounce] Injecting with IFMLLoadingPlugin.");
-
+        System.out.println("[near] Injecting with IFMLLoadingPlugin.");
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.near.json");
         MixinEnvironment.getDefaultEnvironment().setSide(MixinEnvironment.Side.CLIENT);

@@ -120,11 +120,11 @@ public class ClassTransformer implements IClassTransformer {
                 AbstractInsnNode insn = iter.next();
                 if (insn.getOpcode() == Opcodes.ARETURN) {
                     method.instructions.insertBefore(insn, new MethodInsnNode(
-                            Opcodes.INVOKESTATIC,
-                            "studio.dreamys.asm.ResourcePackImageScaler".replace('.', '/'),
-                            "scalePackImage",
-                            "(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;",
-                            false));
+                        Opcodes.INVOKESTATIC,
+                        "studio.dreamys.asm.ResourcePackImageScaler".replace('.', '/'),
+                        "scalePackImage",
+                        "(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;",
+                        false));
                 }
             }
         }

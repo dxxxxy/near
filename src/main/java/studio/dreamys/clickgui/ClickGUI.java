@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClickGUI extends GuiScreen {
-
     public static ArrayList<Frame> frames;
     public static final int color = new Color(128, 51, 205).getRGB();
 
@@ -27,6 +26,7 @@ public class ClickGUI extends GuiScreen {
 
     @Override
     public void initGui() {
+
     }
 
     @Override

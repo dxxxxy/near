@@ -11,7 +11,6 @@ import java.util.List;
 
 @Mixin(GuiOverlayDebug.class)
 public class DebugHudMixin {
-
     public DebugHudMixin() {
         near.cullTask.requestCull = true;
     }
@@ -23,7 +22,6 @@ public class DebugHudMixin {
         list.add("[Culling] Last pass: " + near.cullTask.lastTime + "ms");
         list.add("[Culling] Rendered Block Entities: " + near.renderedBlockEntities + " Skipped: " + near.skippedBlockEntities);
         list.add("[Culling] Rendered Entities: " + near.renderedEntities + " Skipped: " + near.skippedEntities);
-        //list.add("[Culling] Ticked Entities: " + lastTickedEntities + " Skipped: " + lastSkippedEntityTicks);
         
         near.renderedBlockEntities = 0;
         near.skippedBlockEntities = 0;
@@ -32,5 +30,4 @@ public class DebugHudMixin {
 
         return list;
     }
-    
 }

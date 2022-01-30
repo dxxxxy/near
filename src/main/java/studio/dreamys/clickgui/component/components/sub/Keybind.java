@@ -7,8 +7,8 @@ import org.lwjgl.opengl.GL11;
 import studio.dreamys.clickgui.component.Component;
 import studio.dreamys.clickgui.component.components.Button;
 
+@SuppressWarnings("DuplicatedCode")
 public class Keybind extends Component {
-
     private final Button parent;
     private boolean hovered;
     private boolean binding;

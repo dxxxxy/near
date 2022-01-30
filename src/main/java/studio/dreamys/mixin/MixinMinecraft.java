@@ -20,6 +20,7 @@ public class MixinMinecraft {
 
         RenderUtils.deltaTime = deltaTime;
     }
+
     public long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }

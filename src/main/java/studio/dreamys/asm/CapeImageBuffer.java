@@ -10,7 +10,6 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings({"unused", "EmptyMethod", "SameReturnValue"})
 public class CapeImageBuffer implements IImageBuffer {
-
     public ImageBufferDownload imageBufferDownload;
     public final WeakReference<AbstractClientPlayer> playerRef;
     public final ResourceLocation resourceLocation;

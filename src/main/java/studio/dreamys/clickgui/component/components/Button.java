@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Button extends Component {
-
     private final ArrayList<Component> subcomponents;
     public final Module mod;
     public final Frame parent;

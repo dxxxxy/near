@@ -9,8 +9,8 @@ import studio.dreamys.settings.Setting;
 
 import java.awt.*;
 
+@SuppressWarnings("DuplicatedCode")
 public class Checkbox extends Component {
-
     private final Setting op;
     private final Button parent;
     private boolean hovered;
@@ -35,8 +35,7 @@ public class Checkbox extends Component {
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(op.getName(), (parent.parent.getX() + 10 + 4) * 2 + 5, (parent.parent.getY() + offset + 2) * 2 + 4, -1);
         GL11.glPopMatrix();
         Gui.drawRect(parent.parent.getX() + 3 + 4, parent.parent.getY() + offset + 3, parent.parent.getX() + 9 + 4, parent.parent.getY() + offset + 9, 0xFF999999);
-        if (op.getValBoolean())
-            Gui.drawRect(parent.parent.getX() + 4 + 4, parent.parent.getY() + offset + 4, parent.parent.getX() + 8 + 4, parent.parent.getY() + offset + 8, new Color(128, 51, 205).getRGB());
+        if (op.getValBoolean()) Gui.drawRect(parent.parent.getX() + 4 + 4, parent.parent.getY() + offset + 4, parent.parent.getX() + 8 + 4, parent.parent.getY() + offset + 8, new Color(128, 51, 205).getRGB());
     }
 
     @Override

@@ -57,27 +57,20 @@ public abstract class MixinGuiButton extends Gui {
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
             FontRenderer fontRenderer = mc.fontRendererObj;
-            hovered = (mouseX >= xPosition && mouseY >= yPosition &&
-                    mouseX < xPosition + width && mouseY < yPosition + height);
+            hovered = (mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height);
 
             int delta = RenderUtils.deltaTime;
 
             if (enabled && hovered) {
                 cut += 0.05F * delta;
-
                 if (cut >= 4) cut = 4;
-
                 alpha += 0.3F * delta;
-
                 if (alpha >= 210) alpha = 210;
             }
             else {
                 cut -= 0.05F * delta;
-
                 if (cut <= 0) cut = 0;
-
                 alpha -= 0.3F * delta;
-
                 if (alpha <= 120) alpha = 120;
             }
 

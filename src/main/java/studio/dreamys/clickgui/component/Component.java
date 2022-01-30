@@ -3,7 +3,6 @@ package studio.dreamys.clickgui.component;
 import java.io.IOException;
 
 public class Component {
-
     public void renderComponent() {
 
     }

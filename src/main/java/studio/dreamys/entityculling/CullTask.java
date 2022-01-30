@@ -17,20 +17,17 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class CullTask implements Runnable {
-
-	public boolean requestCull = false;
+	public boolean requestCull;
 
 	private final OcclusionCullingInstance culling;
     private final Minecraft client = Minecraft.getMinecraft();
-	private final int sleepDelay = near.config.sleepDelay;
-	private final int hitboxLimit = near.config.hitboxLimit;
 	private final Set<String> unCullable;
-	public long lastTime = 0;
+	public long lastTime;
 	
-	// reused preallocated vars
-	private Vec3d lastPos = new Vec3d(0, 0, 0);
-	private Vec3d aabbMin = new Vec3d(0, 0, 0);
-	private Vec3d aabbMax = new Vec3d(0, 0, 0);
+	//reused preallocated vars
+	private final Vec3d lastPos = new Vec3d(0, 0, 0);
+	private final Vec3d aabbMin = new Vec3d(0, 0, 0);
+	private final Vec3d aabbMax = new Vec3d(0, 0, 0);
 
 	public CullTask(OcclusionCullingInstance culling, Set<String> unCullable) {
 		this.culling = culling;
@@ -39,16 +36,13 @@ public class CullTask implements Runnable {
 	
 	@Override
 	public void run() {
+		//noinspection LoopConditionNotUpdatedInsideLoop
 		while (client != null) { // not correct, but the running field is hidden
 			try {
-				Thread.sleep(sleepDelay);
+				Thread.sleep(Config.sleepDelay);
 				if (near.moduleManager.getModule("Optimization").isToggled() && near.settingsManager.getSettingByName(near.moduleManager.getModule("Optimization"), "Culling").getValBoolean() && client.theWorld != null && client.thePlayer != null && client.thePlayer.ticksExisted > 10 && client.getRenderViewEntity() != null) {
-				    Vec3 cameraMC = null;
-				    if(near.config.debugMode) {
-				        cameraMC = client.thePlayer.getPositionEyes(0);
-				    } else {
-			            cameraMC = getCameraPos();
-				    }
+				    Vec3 cameraMC;
+				    cameraMC = getCameraPos();
 					if (requestCull || !(cameraMC.xCoord == lastPos.x && cameraMC.yCoord == lastPos.y && cameraMC.zCoord == lastPos.z)) {
 						long start = System.currentTimeMillis();
 						requestCull = false;
@@ -69,7 +63,7 @@ public class CullTask implements Runnable {
 								continue;
 							}
 							Cullable cullable = (Cullable) entry;
-							if (!cullable.isForcedVisible()) {
+							if (cullable.isForcedVisible()) {
 								if (noCulling) {
 									cullable.setCulled(false);
 									continue;
@@ -84,7 +78,7 @@ public class CullTask implements Runnable {
 
 							}
 						}
-						Entity entity = null;
+						Entity entity;
 						Iterator<Entity> iterable = client.theWorld.getLoadedEntityList().iterator();
 						while (iterable.hasNext()) {
 							try {
@@ -93,21 +87,21 @@ public class CullTask implements Runnable {
 								break; // We are not synced to the main thread, so NPE's/CME are allowed here and way less
 										// overhead probably than trying to sync stuff up for no really good reason
 							}
-							if(entity == null || !(entity instanceof Cullable)) {
+							if(!(entity instanceof Cullable)) {
 							    continue; // Not sure how this could happen outside from mixin screwing up the inject into Entity
 							}
 							Cullable cullable = (Cullable) entity;
-							if (!cullable.isForcedVisible()) {
+							if (cullable.isForcedVisible()) {
 								if (noCulling || isSkippableArmorstand(entity)) {
 									cullable.setCulled(false);
 									continue;
 								}
-							    if(entity.getPositionVector().squareDistanceTo(cameraMC) > near.config.tracingDistance * near.config.tracingDistance) {
+							    if(entity.getPositionVector().squareDistanceTo(cameraMC) > Config.tracingDistance * Config.tracingDistance) {
 							        cullable.setCulled(false); // If your entity view distance is larger than tracingDistance just render it
 							        continue;
 							    }
 							    AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
-							    if(boundingBox.maxX - boundingBox.minX > hitboxLimit || boundingBox.maxY - boundingBox.minY > hitboxLimit || boundingBox.maxZ - boundingBox.minZ > hitboxLimit) {
+							    if(boundingBox.maxX - boundingBox.minX > Config.hitboxLimit || boundingBox.maxY - boundingBox.minY > Config.hitboxLimit || boundingBox.maxZ - boundingBox.minZ > Config.hitboxLimit) {
 								    cullable.setCulled(false); // To big to bother to cull
 								    continue;
 								}
@@ -129,52 +123,12 @@ public class CullTask implements Runnable {
 	
 	// 1.8 doesnt know where the heck the camera is... what?!?
 	private Vec3 getCameraPos() {
-	    if (client.gameSettings.thirdPersonView == 0) {
-	        return client.getRenderViewEntity().getPositionEyes(0);
-	    }
-	    return client.getRenderViewEntity().getPositionEyes(0);
+		return client.getRenderViewEntity().getPositionEyes(0);
 	    // doesnt work correctly
-//        Entity entity = client.getRenderViewEntity();
-//        float f = entity.getEyeHeight();
-//        double d0 = entity.posX;
-//        double d1 = entity.posY + f;
-//        double d2 = entity.posZ;
-//        double d3 = 4.0F;
-//        float f1 = entity.rotationYaw;
-//        float f2 = entity.rotationPitch;
-//        if (client.gameSettings.thirdPersonView == 2)
-//            f2 += 180.0F;
-//        double d4 = (-MathHelper.sin(f1 / 180.0F * 3.1415927F) * MathHelper.cos(f2 / 180.0F * 3.1415927F)) * d3;
-//        double d5 = (MathHelper.cos(f1 / 180.0F * 3.1415927F) * MathHelper.cos(f2 / 180.0F * 3.1415927F)) * d3;
-//        double d6 = -MathHelper.sin(f2 / 180.0F * 3.1415927F) * d3;
-//        for (int i = 0; i < 8; i++) {
-//            float f3 = ((i & 0x1) * 2 - 1);
-//            float f4 = ((i >> 1 & 0x1) * 2 - 1);
-//            float f5 = ((i >> 2 & 0x1) * 2 - 1);
-//            f3 *= 0.1F;
-//            f4 *= 0.1F;
-//            f5 *= 0.1F;
-//            MovingObjectPosition movingobjectposition = client.theWorld.rayTraceBlocks(
-//                    new Vec3(d0 + f3, d1 + f4, d2 + f5),
-//                    new Vec3(d0 - d4 + f3 + f5, d1 - d6 + f4, d2 - d5 + f5));
-//            if (movingobjectposition != null) {
-//                double d7 = movingobjectposition.hitVec.distanceTo(new Vec3(d0, d1, d2));
-//                if (d7 < d3)
-//                    d3 = d7;
-//            }
-//        }
-//        float pitchRadian = f2 * (3.1415927F / 180); // X rotation
-//        float yawRadian   = f1   * (3.1415927F / 180); // Y rotation
-//        double newPosX = d0 - d3 *  MathHelper.sin( yawRadian ) * MathHelper.cos( pitchRadian );
-//        double newPosY = d1 - d3 * -MathHelper.sin( pitchRadian );
-//        double newPosZ = d2 - d3 *  MathHelper.cos( yawRadian ) * MathHelper.cos( pitchRadian );
-//        Vec3 vec = new Vec3(newPosX, newPosY, newPosZ);
-//        System.out.println(newPosX + " " + newPosY + " " + newPosZ);
-//        return vec;
 	}
 	
 	private boolean isSkippableArmorstand(Entity entity) {
-	    if(!near.config.skipMarkerArmorStands)return false;
+	    if(!Config.skipMarkerArmorStands)return false;
 	    return entity instanceof EntityArmorStand && ((EntityArmorStand) entity).hasMarker();
 	}
 }

@@ -7,8 +7,8 @@ import studio.dreamys.clickgui.component.Component;
 import studio.dreamys.clickgui.component.components.Button;
 import studio.dreamys.settings.Setting;
 
+@SuppressWarnings("DuplicatedCode")
 public class ModeButton extends Component {
-
     private final Button parent;
     private final Setting set;
     private boolean hovered;

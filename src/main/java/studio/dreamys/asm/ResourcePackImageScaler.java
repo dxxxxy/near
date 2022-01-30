@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 @SuppressWarnings("unused")
 public class ResourcePackImageScaler {
-
     public static final int SIZE = 64;
 
     public static BufferedImage scalePackImage(BufferedImage image) {

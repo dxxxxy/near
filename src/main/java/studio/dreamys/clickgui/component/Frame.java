@@ -12,7 +12,6 @@ import studio.dreamys.near;
 import java.util.ArrayList;
 
 public class Frame {
-
     private final int width;
     private final int barHeight;
     public final ArrayList<Component> components;
@@ -113,5 +112,4 @@ public class Frame {
     public boolean isWithinHeader(int x, int y) {
         return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + barHeight;
     }
-
 }

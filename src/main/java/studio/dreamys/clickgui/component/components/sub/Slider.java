@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class Slider extends Component {
-
     private final Setting set;
     private final Button parent;
     private boolean hovered;
@@ -43,7 +42,6 @@ public class Slider extends Component {
         GL11.glPushMatrix();
         GL11.glScalef(0.5f, 0.5f, 0.5f);
         Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(set.getName() + ": " + set.getValDouble(), (parent.parent.getX() * 2 + 15), (parent.parent.getY() + offset + 2) * 2 + 5, -1);
-
         GL11.glPopMatrix();
     }
 
@@ -77,10 +75,7 @@ public class Slider extends Component {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
-        if (isMouseOnButtonD(mouseX, mouseY) && button == 0 && parent.open) {
-            dragging = true;
-        }
-        if (isMouseOnButtonI(mouseX, mouseY) && button == 0 && parent.open) {
+        if ((isMouseOnButtonD(mouseX, mouseY) || isMouseOnButtonI(mouseX, mouseY)) && button == 0 && parent.open) {
             dragging = true;
         }
     }
