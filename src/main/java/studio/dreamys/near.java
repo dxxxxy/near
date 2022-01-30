@@ -75,6 +75,9 @@ public class near {
         cullThread.start();
     }
 
+    //if(!near.moduleManager.getModule("Optimization").isToggled() || !near.settingsManager.getSettingByName(near.moduleManager.getModule("Optimization"), "Culling").getValBoolean())return false;
+    //
+
     @SubscribeEvent
     public void key(InputEvent.KeyInputEvent e) {
         if (Minecraft.getMinecraft().theWorld == null || Minecraft.getMinecraft().thePlayer == null) return;

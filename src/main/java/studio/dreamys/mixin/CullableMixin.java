@@ -6,12 +6,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import studio.dreamys.entityculling.access.Cullable;
 import studio.dreamys.near;
 
-@Mixin({Entity.class, TileEntity.class})
+@Mixin(value = { Entity.class, TileEntity.class })
 public class CullableMixin implements Cullable {
 
-	private long lasttime;
-	private boolean culled;
-	private boolean outOfCamera;
+	private long lasttime = 0;
+	private boolean culled = false;
+	private boolean outOfCamera = false;
 	
 	@Override
 	public void setTimeout() {
@@ -20,12 +20,12 @@ public class CullableMixin implements Cullable {
 
 	@Override
 	public boolean isForcedVisible() {
-		return lasttime <= System.currentTimeMillis();
+		return lasttime > System.currentTimeMillis();
 	}
 
 	@Override
 	public void setCulled(boolean value) {
-		culled = value;
+		this.culled = value;
 		if(!value) {
 			setTimeout();
 		}
@@ -39,13 +39,13 @@ public class CullableMixin implements Cullable {
 
     @Override
     public void setOutOfCamera(boolean value) {
-        outOfCamera = value;
+        this.outOfCamera = value;
     }
 
     @Override
     public boolean isOutOfCamera() {
-		if(!near.moduleManager.getModule("Optimization").isToggled() || !near.settingsManager.getSettingByName(near.moduleManager.getModule("Optimization"), "Culling").getValBoolean())return false;
-		return outOfCamera;
+        if(!near.moduleManager.getModule("Optimization").isToggled() || !near.settingsManager.getSettingByName(near.moduleManager.getModule("Optimization"), "Culling").getValBoolean())return false;
+        return outOfCamera;
     }
 
 }

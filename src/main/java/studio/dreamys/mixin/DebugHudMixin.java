@@ -16,8 +16,9 @@ public class DebugHudMixin {
         near.cullTask.requestCull = true;
     }
     
+    @SuppressWarnings("InvalidInjectorMethodSignature")
     @Inject(method = "call", at = @At("RETURN"))
-    public void getLeftText(CallbackInfoReturnable<List<String>> callback) {
+    public List<String> getLeftText(CallbackInfoReturnable<List<String>> callback) {
         List<String> list = callback.getReturnValue();
         list.add("[Culling] Last pass: " + near.cullTask.lastTime + "ms");
         list.add("[Culling] Rendered Block Entities: " + near.renderedBlockEntities + " Skipped: " + near.skippedBlockEntities);
@@ -28,6 +29,8 @@ public class DebugHudMixin {
         near.skippedBlockEntities = 0;
         near.renderedEntities = 0;
         near.skippedEntities = 0;
+
+        return list;
     }
     
 }

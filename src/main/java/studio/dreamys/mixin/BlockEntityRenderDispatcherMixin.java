@@ -15,7 +15,7 @@ public class BlockEntityRenderDispatcherMixin {
     @Inject(method = "renderTileEntityAt(Lnet/minecraft/tileentity/TileEntity;DDDFI)V", at = @At("HEAD"), cancellable = true)
     public void renderTileEntityAt(TileEntity blockEntity, double p_renderTileEntityAt_2_, double d1,
             double d2, float f1, int p_renderTileEntityAt_9_, CallbackInfo info) {
-        if (((Cullable) blockEntity).isForcedVisible() && ((Cullable) blockEntity).isCulled()) {
+        if (!((Cullable) blockEntity).isForcedVisible() && ((Cullable) blockEntity).isCulled()) {
             near.skippedBlockEntities++;
             info.cancel();
             return;
