@@ -10,14 +10,11 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ReportedException;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import studio.dreamys.near;
 
 import java.util.Map;
 
@@ -61,6 +58,7 @@ public class MixinRenderManager {
     /**
      * @author
      */
+    @SuppressWarnings("JavaDoc")
     @Overwrite
     public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox)
     {
@@ -78,11 +76,11 @@ public class MixinRenderManager {
                     {
                         ((RendererLivingEntity)render).setRenderOutlines(renderOutlines);
                     }
-                    if (near.settingsManager.getSettingByName(near.moduleManager.getModule("Optimization"), "Hide dungeon mobs").getValBoolean())
-                    if (entity instanceof EntityZombie || entity instanceof EntitySkeleton) {
-                        renderDebugBoundingBox(entity, x, y, z, entityYaw, partialTicks);
-                        return true;
-                    }
+//                    if (near.settingsManager.getSettingByName(near.moduleManager.getModule("Optimization"), "Culling").getValBoolean())
+//                    if (entity instanceof EntityZombie || entity instanceof EntitySkeleton) {
+//                        renderDebugBoundingBox(entity, x, y, z, entityYaw, partialTicks);
+//                        return true;
+//                    }
 
 //                   find entity culling tomorrow TODO
 

@@ -4,10 +4,15 @@
   "refmap": "mixins.near.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "CullableMixin",
     "MixinGuiButton",
     "MixinMinecraft"
   ],
   "client": [
-    "MixinRenderManager"
+    "BlockEntityRenderDispatcherMixin",
+    "DebugHudMixin",
+    "EntityRendererMixin",
+    "MixinRenderManager",
+    "WorldRendererMixin"
   ]
 }

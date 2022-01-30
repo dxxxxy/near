@@ -41,6 +41,7 @@ configurations {
 
 repositories {
     maven { url 'https://repo.spongepowered.org/maven/' }
+    maven { url "https://repo.codemc.io/repository/maven-public/" }
     //repos for libraries (not gradle plugins)
     //example:
     //maven { url "https://repo.hypixel.net/repository/Hypixel" }
@@ -50,6 +51,8 @@ dependencies {
     compile('org.spongepowered:mixin:0.7.10-SNAPSHOT') {
         exclude module: 'launchwrapper'
     }
+
+    shade "com.logisticscraft:occlusionculling:0.0.5-SNAPSHOT"
     //shade will bundle your library to the output jar
     //your libraries will be accessible outside of intellij
     //example:

@@ -9,6 +9,6 @@ public class Optimization extends Module {
     public Optimization() {
         super("Optimization", Category.MISC);
 
-        near.settingsManager.rSetting(new Setting("Hide dungeon mobs", this, true));
+        near.settingsManager.rSetting(new Setting("Culling", this, true));
     }
 }
