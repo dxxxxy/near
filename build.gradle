@@ -2,9 +2,11 @@ buildscript {
     repositories {
         //new forge repository
         maven { url "https://maven.minecraftforge.net" }
+        maven { url 'https://repo.spongepowered.org/maven'}
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 
@@ -14,6 +16,7 @@ plugins {
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: 'org.spongepowered.mixin'
 
 version = "1.0"
 group = "dreamys.studio" //http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -37,12 +40,16 @@ configurations {
 }
 
 repositories {
+    maven { url 'https://repo.spongepowered.org/maven/' }
     //repos for libraries (not gradle plugins)
     //example:
     //maven { url "https://repo.hypixel.net/repository/Hypixel" }
 }
 
 dependencies {
+    compile('org.spongepowered:mixin:0.7.10-SNAPSHOT') {
+        exclude module: 'launchwrapper'
+    }
     //shade will bundle your library to the output jar
     //your libraries will be accessible outside of intellij
     //example:
@@ -90,8 +97,17 @@ reobf {
 
 jar {
     manifest {
-        attributes "FMLCorePlugin": "studio.dreamys.asm.FMLLoadingPlugin",
+//        attributes "FMLCorePlugin": "studio.dreamys.asm.FMLLoadingPlugin",
+        attributes "FMLCorePlugin": "studio.dreamys.mixin.MixinLoader",
                 "ModSide": "CLIENT",
-                "FMLCorePluginContainsFMLMod": "Yes, yes it does"
+                'FMLCorePluginContainsFMLMod': 'studio.dreamys.mixin.MixinLoader',
+                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'MixinConfigs': 'mixins.near.json'
+    }
+}
+
+sourceSets {
+    main {
+        ext.refMap = "mixins.near.refmap.json"
     }
 }

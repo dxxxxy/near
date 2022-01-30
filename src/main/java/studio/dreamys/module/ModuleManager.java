@@ -7,6 +7,7 @@ import studio.dreamys.module.dungeons.Map;
 import studio.dreamys.module.hud.ClickGUI;
 import studio.dreamys.module.hud.SummonsHUD;
 import studio.dreamys.module.misc.KneeSurgery;
+import studio.dreamys.module.misc.Optimization;
 import studio.dreamys.module.movement.KeepSprint;
 import studio.dreamys.module.render.Fullbright;
 import studio.dreamys.module.render.ShortDamage;
@@ -28,6 +29,7 @@ public class ModuleManager {
         modules.add(new ShortDamage());
         modules.add(new SummonsHUD());
         modules.add(new Hide());
+        modules.add(new Optimization());
 
         //this has to be the last
         modules.add(new Compact());

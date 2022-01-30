@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderUtils {
     public static final Minecraft mc = Minecraft.getMinecraft();
+    public static int deltaTime;
 
     public static void drawBox(Entity entity, int color) {
         double x = entity.posX - RenderUtils.mc.getRenderManager().viewerPosX;

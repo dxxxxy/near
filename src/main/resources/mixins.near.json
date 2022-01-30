@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "studio.dreamys.mixin",
+  "refmap": "mixins.near.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinGuiButton",
+    "MixinMinecraft"
+  ],
+  "client": [
+    "MixinRenderManager"
+  ]
+}
