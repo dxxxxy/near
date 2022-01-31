@@ -1,4 +1,4 @@
-package studio.dreamys.mixin;
+package studio.dreamys.mixin.render;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import studio.dreamys.entityculling.access.EntityRendererInter;
 
 @Mixin(Render.class)
-public abstract class EntityRendererMixin<T extends Entity> implements EntityRendererInter<T> {
+public abstract class MixinRender<T extends Entity> implements EntityRendererInter<T> {
 
     @Override
     public boolean shadowShouldShowName(T entity) {

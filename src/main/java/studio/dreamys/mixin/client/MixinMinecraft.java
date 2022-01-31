@@ -1,4 +1,4 @@
-package studio.dreamys.mixin;
+package studio.dreamys.mixin.client;
 
 import net.minecraft.client.Minecraft;
 import org.lwjgl.Sys;

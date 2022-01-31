@@ -1,4 +1,4 @@
-package studio.dreamys.mixin;
+package studio.dreamys.mixin.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;

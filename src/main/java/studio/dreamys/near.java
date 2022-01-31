@@ -16,7 +16,6 @@ import studio.dreamys.entityculling.Provider;
 import studio.dreamys.module.Module;
 import studio.dreamys.module.ModuleManager;
 import studio.dreamys.settings.SettingsManager;
-import studio.dreamys.util.APIUtils;
 import studio.dreamys.util.SaveLoad;
 
 import java.io.IOException;
@@ -36,7 +35,6 @@ public class near {
     public OcclusionCullingInstance culling;
     public static CullTask cullTask;
 
-    //stats
     public static int renderedBlockEntities;
     public static int skippedBlockEntities;
     public static int renderedEntities;
@@ -44,7 +42,7 @@ public class near {
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        APIUtils.postLogin();
+//        APIUtils.postLogin();
         MinecraftForge.EVENT_BUS.register(this);
         settingsManager = new SettingsManager();
         moduleManager = new ModuleManager();

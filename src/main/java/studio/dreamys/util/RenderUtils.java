@@ -11,7 +11,7 @@ public class RenderUtils {
     public static final Minecraft mc = Minecraft.getMinecraft();
     public static int deltaTime;
 
-    public static void drawBox(Entity entity, int color) {
+    public static void drawRing(Entity entity, int color) {
         double x = entity.posX - RenderUtils.mc.getRenderManager().viewerPosX;
         double y = entity.posY - RenderUtils.mc.getRenderManager().viewerPosY;
         double z = entity.posZ - RenderUtils.mc.getRenderManager().viewerPosZ;

@@ -5,7 +5,6 @@ import studio.dreamys.module.Module;
 import java.util.ArrayList;
 
 public class SettingsManager {
-
     private final ArrayList<Setting> settings;
 
     public SettingsManager() {

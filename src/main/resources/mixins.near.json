@@ -3,16 +3,13 @@
   "package": "studio.dreamys.mixin",
   "refmap": "mixins.near.refmap.json",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "CullableMixin",
-    "MixinGuiButton",
-    "MixinMinecraft"
-  ],
   "client": [
-    "BlockEntityRenderDispatcherMixin",
-    "DebugHudMixin",
-    "EntityRendererMixin",
-    "MixinRenderManager",
-    "WorldRendererMixin"
+    "client.MixinMinecraft",
+    "entity.CullableMixin",
+    "gui.MixinGuiButton",
+    "gui.MixinGuiOverlayDebug",
+    "render.MixinRender",
+    "render.MixinRenderManager",
+    "render.MixinTileEntityRendererDispatcher"
   ]
 }

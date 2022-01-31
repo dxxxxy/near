@@ -6,7 +6,6 @@ import studio.dreamys.near;
 import java.io.IOException;
 
 public class Module {
-
     private final String name;
     private final Category category;
     private int key;

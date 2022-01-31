@@ -1,4 +1,4 @@
-package studio.dreamys.mixin;
+package studio.dreamys.mixin.gui;
 
 import net.minecraft.client.gui.GuiOverlayDebug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,8 +10,8 @@ import studio.dreamys.near;
 import java.util.List;
 
 @Mixin(GuiOverlayDebug.class)
-public class DebugHudMixin {
-    public DebugHudMixin() {
+public class MixinGuiOverlayDebug {
+    public MixinGuiOverlayDebug() {
         near.cullTask.requestCull = true;
     }
     

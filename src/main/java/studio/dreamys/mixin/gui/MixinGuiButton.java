@@ -1,4 +1,4 @@
-package studio.dreamys.mixin;
+package studio.dreamys.mixin.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

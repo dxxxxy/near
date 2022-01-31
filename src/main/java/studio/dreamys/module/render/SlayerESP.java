@@ -47,7 +47,7 @@ public class SlayerESP extends Module {
             slayers.forEach(slayer -> {
                 //draw ring
                 if (near.settingsManager.getSettingByName(this, "Ring").getValBoolean()) {
-                    RenderUtils.drawBox(slayer, Pattern.compile("tarantula broodfather|voidgloom seraph|(?:revenant|atoned) horror|sven packmaster").matcher(slayer.getName().toLowerCase()).find() ? Color.getHSBColor((System.currentTimeMillis() % 1000) / 1000F, 0.8F, 1F).getRGB() : Color.WHITE.getRGB());
+                    RenderUtils.drawRing(slayer, Pattern.compile("tarantula broodfather|voidgloom seraph|(?:revenant|atoned) horror|sven packmaster").matcher(slayer.getName().toLowerCase()).find() ? Color.getHSBColor((System.currentTimeMillis() % 1000) / 1000F, 0.8F, 1F).getRGB() : Color.WHITE.getRGB());
                 }
                 //draw tracer
                 if (near.settingsManager.getSettingByName(this, "Tracers").getValBoolean()) {

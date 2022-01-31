@@ -26,7 +26,6 @@ public class PlayerUtils {
         Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(PlayerUtils.prefix + color + msg));
     }
 
-
 // --Commented out by Inspection START (1/30/2022 6:17 PM):
 //    public static void addMessage(String msg) {
 //        if (Minecraft.getMinecraft().thePlayer == null) {
