@@ -66,7 +66,7 @@ public class SaveLoad {
                     Module m = near.moduleManager.getModule(args[1]);
                     if (m != null) {
                         m.setToggled(Boolean.parseBoolean(args[2]));
-                        m.setKey(Integer.parseInt(args[3]));
+                        m.key(Integer.parseInt(args[3]));
                     }
                 }
                 if (s.toLowerCase().startsWith("set:")) {

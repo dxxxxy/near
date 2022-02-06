@@ -12,7 +12,7 @@ public class ClickGUI extends Module {
     public ClickGUI() {
         super("ClickGUI", Category.HUD);
 
-        setKey(Keyboard.KEY_RSHIFT);
+        key(Keyboard.KEY_RSHIFT);
     }
 
     @Override

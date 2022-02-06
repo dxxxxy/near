@@ -29,7 +29,7 @@ public class Hide extends Module {
         filters.put("Create SMP", "You can now create your own Hypixel SMP server!");
 
         //register each setting
-        filters.keySet().forEach(setting -> near.settingsManager.rSetting(new Setting(setting, this, true)));
+        filters.keySet().forEach(setting -> set(new Setting(setting, this, true)));
     }
 
     @SubscribeEvent

@@ -21,9 +21,9 @@ public class DragonWings extends Module {
     public DragonWings() {
         super("Dragon Wings", Category.COSMETICS);
 
-        near.settingsManager.rSetting(new Setting("Scale", this, 1, 0.1, 3, false));
-        near.settingsManager.rSetting(new Setting("Color", this, 1, 1, 255, true));
-        near.settingsManager.rSetting(new Setting("Chroma", this, false));
+        set(new Setting("Scale", this, 1, 0.1, 3, false));
+        set(new Setting("Color", this, 1, 1, 255, true));
+        set(new Setting("Chroma", this, false));
     }
 
     @Override
@@ -36,7 +36,6 @@ public class DragonWings extends Module {
         MinecraftForge.EVENT_BUS.unregister(new RenderWings());
     }
 
-    //https://github.com/Canelex/DragonWingsMod
     public static class RenderWings extends ModelBase {
         private final Minecraft mc;
         private final ResourceLocation location;
@@ -76,7 +75,7 @@ public class DragonWings extends Module {
                 Color color = Color.getHSBColor((System.currentTimeMillis() % 1000) / 1000F, 0.8F, 1F);
                 return new float[]{color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F};
             }
-            Color color = new Color((int) near.settingsManager.getSettingByName(new DragonWings(), "Color").getValDouble());
+            Color color = new Color((int) near.settingsManager.getSettingByName(near.moduleManager.getModule("Dragon Wings"), "Color").getValDouble());
             return new float[]{color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F};
         }
 

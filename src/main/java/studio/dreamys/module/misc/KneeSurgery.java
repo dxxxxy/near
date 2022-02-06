@@ -11,7 +11,7 @@ import studio.dreamys.settings.Setting;
 public class KneeSurgery extends Module {
     public KneeSurgery() {
         super("Knee Surgery", Category.MISC);
-        near.settingsManager.rSetting(new Setting("Height", this, 1.62, 0, 3, false));
+        set(new Setting("Height", this, 1.62, 0, 3, false));
     }
 
     @SubscribeEvent

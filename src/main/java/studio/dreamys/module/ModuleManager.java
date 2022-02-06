@@ -2,6 +2,8 @@ package studio.dreamys.module;
 
 import studio.dreamys.module.chat.Compact;
 import studio.dreamys.module.chat.Hide;
+import studio.dreamys.module.chat.Longer;
+import studio.dreamys.module.chat.Transparent;
 import studio.dreamys.module.cosmetics.DragonWings;
 import studio.dreamys.module.dungeons.Map;
 import studio.dreamys.module.hud.ClickGUI;
@@ -30,6 +32,8 @@ public class ModuleManager {
         modules.add(new SummonsHUD());
         modules.add(new Hide());
         modules.add(new Optimization());
+        modules.add(new Transparent());
+        modules.add(new Longer());
 
         //this has to be the last
         modules.add(new Compact());

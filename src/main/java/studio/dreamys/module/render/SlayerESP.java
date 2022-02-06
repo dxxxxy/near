@@ -23,8 +23,8 @@ public class SlayerESP extends Module {
     public SlayerESP() {
         super("SlayerESP", Category.RENDER);
 
-        near.settingsManager.rSetting(new Setting("Ring", this, true));
-        near.settingsManager.rSetting(new Setting("Tracers", this, true));
+        set(new Setting("Ring", this, true));
+        set(new Setting("Tracers", this, true));
     }
 
     //"revenant sycophant" "revenant champion" "deformed revenant" "atoned champion" "atoned revenant" "revenant horror" "atoned horror"

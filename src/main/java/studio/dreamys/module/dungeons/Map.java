@@ -19,14 +19,13 @@ import studio.dreamys.module.Module;
 import studio.dreamys.near;
 import studio.dreamys.settings.Setting;
 
-//https://github.com/EisPaprika/HypixelDungeonMap
 public class Map extends Module {
     public Map() {
         super("Map", Category.DUNGEONS);
 
-        near.settingsManager.rSetting(new Setting("Scale", this,1, 0.1, 3, false));
-        near.settingsManager.rSetting(new Setting("Background", this,false));
-        near.settingsManager.rSetting(new Setting("Players", this,true));
+        set(new Setting("Scale", this,1, 0.1, 3, false));
+        set(new Setting("Background", this,false));
+        set(new Setting("Players", this,true));
     }
 
     static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");

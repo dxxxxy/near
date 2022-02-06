@@ -2,6 +2,7 @@ package studio.dreamys.module;
 
 import net.minecraftforge.common.MinecraftForge;
 import studio.dreamys.near;
+import studio.dreamys.settings.Setting;
 
 import java.io.IOException;
 
@@ -22,11 +23,15 @@ public class Module {
         return key;
     }
 
-    public void setKey(int key) {
+    public void key(int key) {
         this.key = key;
         if (near.saveLoad != null) {
             near.saveLoad.save();
         }
+    }
+    
+    public void set(Setting set) {
+        near.settingsManager.rSetting(set);
     }
 
     public boolean isToggled() {

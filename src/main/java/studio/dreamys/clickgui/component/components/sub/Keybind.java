@@ -55,7 +55,7 @@ public class Keybind extends Component {
     @Override
     public void keyTyped(char typedChar, int key) {
         if (binding) {
-            parent.mod.setKey(key);
+            parent.mod.key(key);
             binding = false;
         }
     }
