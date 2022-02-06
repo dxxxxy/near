@@ -21,15 +21,15 @@ class Particle {
     public float x;
     public float y;
     public final float size;
-    private final float ySpeed = new Random().nextInt(5);
-    private final float xSpeed = new Random().nextInt(5);
+    private final float ySpeed = new Random().nextInt(2);
+    private final float xSpeed = new Random().nextInt(2);
     private int height;
     private int width;
 
     Particle(int x, int y) {
         this.x = x;
         this.y = y;
-        this.size = genRandom();
+        size = genRandom();
     }
 
     private float lint1(float f) {
@@ -78,9 +78,9 @@ class Particle {
 
     void interpolation() {
         for(int n = 0; n <= 64; ++n) {
-            final float f = n / 64.0f;
-            final float p1 = lint1(f);
-            final float p2 = lint2(f);
+            float f = n / 64.0f;
+            float p1 = lint1(f);
+            float p2 = lint2(f);
 
             if(p1 != p2) {
                 y -= f;
@@ -90,8 +90,8 @@ class Particle {
     }
 
     void fall() {
-        final Minecraft mc = Minecraft.getMinecraft();
-        final ScaledResolution scaledResolution = new ScaledResolution(mc);
+        Minecraft mc = Minecraft.getMinecraft();
+        ScaledResolution scaledResolution = new ScaledResolution(mc);
         y = (y + ySpeed);
         x = (x + xSpeed);
 

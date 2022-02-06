@@ -27,15 +27,15 @@ public class MixinGuiNewChat {
 
     @Final
     @Shadow
-    private List<String> sentMessages = Lists.<String>newArrayList();
+    private List<String> sentMessages = Lists.newArrayList();
 
     @Final
     @Shadow
-    private List<ChatLine> chatLines = Lists.<ChatLine>newArrayList();
+    private List<ChatLine> chatLines = Lists.newArrayList();
 
     @Final
     @Shadow
-    private List<ChatLine> drawnChatLines = Lists.<ChatLine>newArrayList();
+    private List<ChatLine> drawnChatLines = Lists.newArrayList();
 
     @Shadow
     private int scrollPos;

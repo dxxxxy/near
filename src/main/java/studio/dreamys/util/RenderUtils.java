@@ -1,12 +1,18 @@
 package studio.dreamys.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import studio.dreamys.util.shader.shaders.BackgroundShader;
 
 import java.awt.*;
 
@@ -146,5 +152,31 @@ public class RenderUtils {
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_LINE_SMOOTH);
         glColor4f(1F, 1F, 1F, 1F);
+    }
+
+    public static void drawClientBackground(int width, int height) {
+        GlStateManager.disableLighting();
+        GlStateManager.disableFog();
+
+        BackgroundShader.BACKGROUND_SHADER.startShader();
+
+        Tessellator instance = Tessellator.getInstance();
+        WorldRenderer worldRenderer = instance.getWorldRenderer();
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(0, height, 0.0D).endVertex();
+        worldRenderer.pos(width, height, 0.0D).endVertex();
+        worldRenderer.pos(width, 0, 0.0D).endVertex();
+        worldRenderer.pos(0, 0, 0.0D).endVertex();
+        instance.draw();
+
+        BackgroundShader.BACKGROUND_SHADER.stopShader();
+
+        ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
+    }
+
+    public static void makeScissorBox(float x, float y, float x2, float y2) {
+        ScaledResolution scaledResolution = new ScaledResolution(mc);
+        int factor = scaledResolution.getScaleFactor();
+        glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
 }

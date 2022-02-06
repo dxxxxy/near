@@ -100,7 +100,7 @@ public abstract class MixinGuiScreen {
 //            }
 
 //            if (GuiBackground.Companion.getParticles())
-                ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
+            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
             callbackInfo.cancel();
     }
 

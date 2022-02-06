@@ -48,7 +48,7 @@ public abstract class MixinGuiConnecting extends GuiScreen {
 
         String ip = "Unknown";
 
-        final ServerData serverData = mc.getCurrentServerData();
+        ServerData serverData = mc.getCurrentServerData();
         if(serverData != null)
             ip = serverData.serverIP;
 
