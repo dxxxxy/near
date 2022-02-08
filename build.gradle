@@ -62,7 +62,8 @@ dependencies {
     }
 
     shade "com.logisticscraft:occlusionculling:0.0.5-SNAPSHOT"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    shade "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.projectlombok:lombok:1.18.22"
     //shade will bundle your library to the output jar
     //your libraries will be accessible outside of intellij
     //example:
@@ -131,6 +132,7 @@ sourceSets {
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
+        languageVersion = "1.3"
     }
 }
 compileTestKotlin {

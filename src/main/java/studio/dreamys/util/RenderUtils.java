@@ -179,4 +179,15 @@ public class RenderUtils {
         int factor = scaledResolution.getScaleFactor();
         glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
+
+
+    public static void drawLine(double x, double y, double x1, double y1, float width) {
+        glDisable(GL_TEXTURE_2D);
+        glLineWidth(width);
+        glBegin(GL_LINES);
+        glVertex2d(x, y);
+        glVertex2d(x1, y1);
+        glEnd();
+        glEnable(GL_TEXTURE_2D);
+    }
 }

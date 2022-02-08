@@ -12,6 +12,7 @@ import studio.dreamys.module.misc.KneeSurgery;
 import studio.dreamys.module.misc.Optimization;
 import studio.dreamys.module.movement.KeepSprint;
 import studio.dreamys.module.render.Fullbright;
+import studio.dreamys.module.render.ItemOutlines;
 import studio.dreamys.module.render.ShortDamage;
 import studio.dreamys.module.render.SlayerESP;
 
@@ -34,6 +35,7 @@ public class ModuleManager {
         modules.add(new Optimization());
         modules.add(new Transparent());
         modules.add(new Longer());
+        modules.add(new ItemOutlines());
 
         //this has to be the last
         modules.add(new Compact());

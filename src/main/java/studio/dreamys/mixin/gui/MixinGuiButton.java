@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import studio.dreamys.font.AWTFontRenderer;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.util.RenderUtils;
 
 import java.awt.*;
@@ -56,7 +58,7 @@ public abstract class MixinGuiButton {
     @Overwrite
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
-            FontRenderer fontRenderer = mc.fontRendererObj;
+            FontRenderer fontRenderer = mc.getLanguageManager().isCurrentLocaleUnicode() ? mc.fontRendererObj : Fonts.font35;
             hovered = (mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height);
 
             int delta = RenderUtils.deltaTime;
@@ -74,22 +76,16 @@ public abstract class MixinGuiButton {
                 if (alpha <= 120) alpha = 120;
             }
 
-            Gui.drawRect(xPosition + (int) cut, yPosition,
-                    xPosition + width - (int) cut, yPosition + height,
-                    enabled ? new Color(0F, 0F, 0F, alpha / 255F).getRGB() :
-                            new Color(0.5F, 0.5F, 0.5F, 0.5F).getRGB());
+            Gui.drawRect(xPosition + (int) cut, yPosition, xPosition + width - (int) cut, yPosition + height, enabled ? new Color(0F, 0F, 0F, alpha / 255F).getRGB() : new Color(0.5F, 0.5F, 0.5F, 0.5F).getRGB());
 
             mc.getTextureManager().bindTexture(buttonTextures);
             mouseDragged(mc, mouseX, mouseY);
 
-//            AWTFontRenderer.Companion.setAssumeNonVolatile(true);
+            AWTFontRenderer.Companion.setAssumeNonVolatile(true);
 
-            fontRenderer.drawStringWithShadow(displayString,
-                    (float) ((xPosition + width / 2) -
-                            fontRenderer.getStringWidth(displayString) / 2),
-                    yPosition + (height - 5) / 2F, 14737632);
+            fontRenderer.drawString(displayString, (float) ((xPosition + width / 2) - fontRenderer.getStringWidth(displayString) / 2), yPosition + (height - 5) / 2F, 14737632, false);
 
-//            AWTFontRenderer.Companion.setAssumeNonVolatile(false);
+            AWTFontRenderer.Companion.setAssumeNonVolatile(false);
 
             GlStateManager.resetColor();
         }

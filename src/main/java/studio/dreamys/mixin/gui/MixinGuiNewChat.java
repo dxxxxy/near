@@ -5,13 +5,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatLine;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiNewChat;
+import net.minecraft.client.gui.GuiUtilRenderComponents;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.near;
 
 import java.util.List;
@@ -119,7 +122,7 @@ public class MixinGuiNewChat {
                                 }
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-                                mc.fontRendererObj.drawStringWithShadow(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
+                                Fonts.font35.drawString(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -128,7 +131,7 @@ public class MixinGuiNewChat {
                 }
 
                 if (flag) {
-                    int k2 = mc.fontRendererObj.FONT_HEIGHT;
+                    int k2 = Fonts.font35.FONT_HEIGHT;
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;
@@ -148,4 +151,50 @@ public class MixinGuiNewChat {
             }
         }
     }
+
+    @Shadow
+    public void scroll(int amount) {}
+
+    @Shadow
+    public void deleteChatLine(int id) {}
+
+    @Overwrite
+    private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly)
+    {
+        if (chatLineId != 0)
+        {
+            deleteChatLine(chatLineId);
+        }
+
+        int i = MathHelper.floor_float((float) getChatWidth() / getChatScale());
+        List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, mc.fontRendererObj, false, false);
+        boolean flag = getChatOpen();
+
+        for (IChatComponent ichatcomponent : list)
+        {
+            if (flag && scrollPos > 0)
+            {
+                isScrolled = true;
+                scroll(1);
+            }
+
+            drawnChatLines.add(0, new ChatLine(updateCounter, ichatcomponent, chatLineId));
+        }
+
+//        while (drawnChatLines.size() > 100)
+//        {
+//            drawnChatLines.remove(drawnChatLines.size() - 1);
+//        }
+
+        if (!displayOnly)
+        {
+            chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
+
+//            while (chatLines.size() > 100)
+//            {
+//                chatLines.remove(chatLines.size() - 1);
+//            }
+        }
+    }
+
 }

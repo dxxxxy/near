@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.util.RenderUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,7 +40,7 @@ public abstract class MixinGuiConnecting extends GuiScreen {
 
     @Overwrite
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+        FontRenderer fr = Fonts.font35;
         ScaledResolution scaledResolution = new ScaledResolution(Minecraft.getMinecraft());
 
         drawDefaultBackground();
@@ -49,8 +50,7 @@ public abstract class MixinGuiConnecting extends GuiScreen {
         String ip = "Unknown";
 
         ServerData serverData = mc.getCurrentServerData();
-        if(serverData != null)
-            ip = serverData.serverIP;
+        if(serverData != null) ip = serverData.serverIP;
 
         fr.drawString("Connecting to", (scaledResolution.getScaledWidth() / 2) - fr.getStringWidth("Connecting to") / 2F, scaledResolution.getScaledHeight() / 4 + 110, 0xFFFFFF, true);
         fr.drawString(ip, scaledResolution.getScaledWidth() / 2 - fr.getStringWidth(ip) / 2F, scaledResolution.getScaledHeight() / 4 + 120, 0x5281FB, true);

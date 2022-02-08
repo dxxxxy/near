@@ -13,6 +13,7 @@ import studio.dreamys.clickgui.ClickGUI;
 import studio.dreamys.entityculling.Config;
 import studio.dreamys.entityculling.CullTask;
 import studio.dreamys.entityculling.Provider;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.module.Module;
 import studio.dreamys.module.ModuleManager;
 import studio.dreamys.settings.SettingsManager;
@@ -58,6 +59,8 @@ public class near {
             ex.printStackTrace();
         });
         cullThread.start();
+
+        Fonts.loadFonts();
     }
 
     @SubscribeEvent

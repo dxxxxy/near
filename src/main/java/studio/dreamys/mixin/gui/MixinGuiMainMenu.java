@@ -6,6 +6,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.util.RenderUtils;
 
 @Mixin(GuiMainMenu.class)
@@ -15,8 +16,8 @@ public class MixinGuiMainMenu extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtils.drawClientBackground(width, height);
 
-        drawString(fontRendererObj, "near 1.8.9", 2, height - 10, -1);
-        drawString(fontRendererObj, "dxxxxy#0776", width - fontRendererObj.getStringWidth("dxxxxy#0776") - 2, height - 10, -1);
+        Fonts.font35.drawString("near 1.8.9", 2, height - 10, -1);
+        Fonts.font35.drawString( "dxxxxy#0776", width - Fonts.font35.getStringWidth("dxxxxy#0776") - 2, height - 10, -1);
 
         Gui.drawRect(width / 2 - 115, height / 4 + 35, width / 2 + 115, height / 4 + 175, Integer.MIN_VALUE);
 
