@@ -2,6 +2,13 @@ package studio.dreamys;
 
 import com.logisticscraft.occlusionculling.OcclusionCullingInstance;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerChest;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -9,10 +16,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import studio.dreamys.clickgui.ClickGUI;
 import studio.dreamys.entityculling.Config;
 import studio.dreamys.entityculling.CullTask;
 import studio.dreamys.entityculling.Provider;
+import studio.dreamys.events.ChestSlotClickedEvent;
+import studio.dreamys.events.GuiChestBackgroundDrawnEvent;
 import studio.dreamys.font.Fonts;
 import studio.dreamys.module.Module;
 import studio.dreamys.module.ModuleManager;
@@ -20,6 +30,7 @@ import studio.dreamys.settings.SettingsManager;
 import studio.dreamys.util.SaveLoad;
 
 import java.io.IOException;
+import java.util.List;
 
 @Mod(modid = near.MODID, name = near.NAME, version = near.VERSION)
 public class near {
@@ -83,5 +94,47 @@ public class near {
     @SubscribeEvent
     public void onWorldTick(TickEvent.WorldTickEvent event) {
         cullTask.requestCull = true;
+    }
+
+    @SubscribeEvent
+    public void onGuiMouseInputPre(GuiScreenEvent.MouseInputEvent.Pre event) {
+//        if (!Utils.inSkyblock) return;
+        if (Mouse.getEventButton() != 0 && Mouse.getEventButton() != 1 && Mouse.getEventButton() != 2)
+            return; // Left click, middle click or right click
+        if (!Mouse.getEventButtonState()) return;
+
+        if (event.gui instanceof GuiChest) {
+            Container containerChest = ((GuiChest) event.gui).inventorySlots;
+            if (containerChest instanceof ContainerChest) {
+                // a lot of declarations here, if you get scarred, my bad
+                GuiChest chest = (GuiChest) event.gui;
+                IInventory inventory = ((ContainerChest) containerChest).getLowerChestInventory();
+                Slot slot = chest.getSlotUnderMouse();
+                if (slot == null) return;
+                ItemStack item = slot.getStack();
+                String inventoryName = inventory.getDisplayName().getUnformattedText();
+                if (item == null) {
+                    if (MinecraftForge.EVENT_BUS.post(new ChestSlotClickedEvent(chest, inventory, inventoryName, slot))) event.setCanceled(true);
+                } else {
+                    if (MinecraftForge.EVENT_BUS.post(new ChestSlotClickedEvent(chest, inventory, inventoryName, slot, item))) event.setCanceled(true);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
+//        if (!Utils.inSkyblock) return;
+        if (event.gui instanceof GuiChest) {
+            GuiChest inventory = (GuiChest) event.gui;
+            Container containerChest = inventory.inventorySlots;
+            if (containerChest instanceof ContainerChest) {
+                List<Slot> invSlots = inventory.inventorySlots.inventorySlots;
+                String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
+                int chestSize = inventory.inventorySlots.inventorySlots.size();
+
+                MinecraftForge.EVENT_BUS.post(new GuiChestBackgroundDrawnEvent(inventory, displayName, chestSize, invSlots));
+            }
+        }
     }
 }
