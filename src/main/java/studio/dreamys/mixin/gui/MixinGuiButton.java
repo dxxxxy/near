@@ -49,16 +49,14 @@ public abstract class MixinGuiButton {
     @Shadow
     @Final
     protected static ResourceLocation buttonTextures;
+
     private float cut;
     private float alpha;
 
-    /**
-     * @author CCBlueX
-     */
     @Overwrite
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
-            FontRenderer fontRenderer = mc.getLanguageManager().isCurrentLocaleUnicode() ? mc.fontRendererObj : Fonts.font35;
+            FontRenderer fr = Fonts.font35RobotoMedium;
             hovered = (mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height);
 
             int delta = RenderUtils.deltaTime;
@@ -79,11 +77,12 @@ public abstract class MixinGuiButton {
             Gui.drawRect(xPosition + (int) cut, yPosition, xPosition + width - (int) cut, yPosition + height, enabled ? new Color(0F, 0F, 0F, alpha / 255F).getRGB() : new Color(0.5F, 0.5F, 0.5F, 0.5F).getRGB());
 
             mc.getTextureManager().bindTexture(buttonTextures);
+
             mouseDragged(mc, mouseX, mouseY);
 
             AWTFontRenderer.Companion.setAssumeNonVolatile(true);
 
-            fontRenderer.drawString(displayString, (float) ((xPosition + width / 2) - fontRenderer.getStringWidth(displayString) / 2), yPosition + (height - 5) / 2F, 14737632, false);
+            fr.drawString(displayString, (float) ((xPosition + width / 2) - fr.getStringWidth(displayString) / 2), yPosition + (height - 5) / 2F, 14737632, false);
 
             AWTFontRenderer.Companion.setAssumeNonVolatile(false);
 

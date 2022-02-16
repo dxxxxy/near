@@ -18,8 +18,6 @@ import studio.dreamys.util.RenderUtils;
 
 @Mixin(GuiSlot.class)
 public abstract class MixinGuiSlot {
-    private int listWidth = 220;
-    private boolean enableScissor = false;
 
     @Shadow
     protected boolean field_178041_q;
@@ -79,9 +77,6 @@ public abstract class MixinGuiSlot {
     @Shadow
     protected abstract void func_148142_b(int p_148142_1_, int p_148142_2_);
 
-    /**
-     * @author CCBlueX
-     */
     @Overwrite
     public void drawScreen(int mouseXIn, int mouseYIn, float p_148128_3_) {
         if(field_178041_q) {
@@ -171,27 +166,13 @@ public abstract class MixinGuiSlot {
         }
     }
 
-    /**
-     * @author CCBlueX
-     */
     @Overwrite
     protected int getScrollBarX() {
         return width - 5;
     }
 
-    public void setEnableScissor(boolean enableScissor) {
-        this.enableScissor = enableScissor;
-    }
-
-    /**
-     * @author CCBlueX (superblaubeere27)
-     */
     @Overwrite
     public int getListWidth() {
-        return listWidth;
-    }
-
-    public void setListWidth(int listWidth) {
-        this.listWidth = listWidth;
+        return 220;
     }
 }

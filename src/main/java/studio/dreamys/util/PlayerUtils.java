@@ -2,13 +2,15 @@ package studio.dreamys.util;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.ChatComponentText;
 
 public class PlayerUtils {
     public static final String prefix = "§b§l[§f§lnear§b§l]§r ";
+    public static final EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
 
     public static void addMessage(String msg, String result) {
-        if (Minecraft.getMinecraft().thePlayer == null) {
+        if (player == null) {
             System.out.println(msg);
             return;
         }
@@ -23,17 +25,20 @@ public class PlayerUtils {
                     break;
             }
 
-        Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(PlayerUtils.prefix + color + msg));
+        player.addChatComponentMessage(new ChatComponentText(prefix + color + msg));
     }
 
-// --Commented out by Inspection START (1/30/2022 6:17 PM):
-//    public static void addMessage(String msg) {
-//        if (Minecraft.getMinecraft().thePlayer == null) {
-//            System.out.println(msg);
-//            return;
-//        }
-//        Minecraft.getMinecraft().thePlayer.addChatComponentMessage(new ChatComponentText(PlayerUtils.prefix + msg));
-//
-//    }
-// --Commented out by Inspection STOP (1/30/2022 6:17 PM)
+    public static void addMessage(ChatComponentText comp) {
+        player.addChatComponentMessage(new ChatComponentText(prefix + comp));
+    }
+
+
+    public static void addMessage(String msg) {
+        if (player == null) {
+            System.out.println(msg);
+            return;
+        }
+
+        player.addChatComponentMessage(new ChatComponentText(prefix + msg));
+    }
 }

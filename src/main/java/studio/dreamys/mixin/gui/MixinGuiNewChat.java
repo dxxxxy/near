@@ -1,200 +1,44 @@
 package studio.dreamys.mixin.gui;
 
-import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ChatLine;
-import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiNewChat;
-import net.minecraft.client.gui.GuiUtilRenderComponents;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import studio.dreamys.font.Fonts;
-import studio.dreamys.near;
-
-import java.util.List;
-
-import static net.minecraft.client.gui.Gui.drawRect;
 
 @Mixin(GuiNewChat.class)
-public class MixinGuiNewChat {
+public class MixinGuiNewChat extends Gui {
 
     @Final
     @Shadow
-    private Minecraft mc = Minecraft.getMinecraft();
-
-    @Final
-    @Shadow
-    private List<String> sentMessages = Lists.newArrayList();
-
-    @Final
-    @Shadow
-    private List<ChatLine> chatLines = Lists.newArrayList();
-
-    @Final
-    @Shadow
-    private List<ChatLine> drawnChatLines = Lists.newArrayList();
-
-    @Shadow
-    private int scrollPos;
-
-    @Shadow
-    private boolean isScrolled;
+    private Minecraft mc;
 
     @Shadow
     public static int calculateChatboxHeight(float scale) {
         return 0;
     }
 
+    @Shadow
     public boolean getChatOpen() {
-        return mc.currentScreen instanceof GuiChat;
+        return false;
     }
 
     @Overwrite
     public int getChatHeight() {
-        return calculateChatboxHeight(getChatOpen() ? (near.moduleManager.getModule("Longer").isToggled() ? mc.gameSettings.chatHeightFocused * 2 : mc.gameSettings.chatHeightFocused) : mc.gameSettings.chatHeightUnfocused);
+        return calculateChatboxHeight(getChatOpen() ? mc.gameSettings.chatHeightFocused * 2.5F : mc.gameSettings.chatHeightUnfocused);
     }
 
-    @Shadow
-    public int getChatWidth() {
-        return 0;
+    @Redirect(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiNewChat;drawRect(IIIII)V"))
+    public void transparent(int a, int b, int c, int d, int e) {}
+
+    @Redirect(method = "drawChat", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/FontRenderer;drawStringWithShadow(Ljava/lang/String;FFI)I"))
+    public int font(FontRenderer instance, String text, float x, float y, int color) {
+        return Fonts.font35RobotoMedium.drawStringWithShadow(text, x, y, color);
     }
-
-    public float getChatScale() {
-        return mc.gameSettings.chatScale;
-    }
-
-    public int getLineCount() {
-        return getChatHeight() / 9;
-    }
-
-    @Overwrite
-    public void drawChat(int updateCounter) {
-        if (mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN) {
-            int i = getLineCount();
-            boolean flag = false;
-            int j = 0;
-            int k = drawnChatLines.size();
-            float f = mc.gameSettings.chatOpacity * 0.9F + 0.1F;
-
-            if (k > 0) {
-                if (getChatOpen()) {
-                    flag = true;
-                }
-
-                float f1 = getChatScale();
-                int l = MathHelper.ceiling_float_int((float) getChatWidth() / f1);
-                GlStateManager.pushMatrix();
-                GlStateManager.translate(2.0F, 20.0F, 0.0F);
-                GlStateManager.scale(f1, f1, 1.0F);
-
-                for (int i1 = 0; i1 + scrollPos < drawnChatLines.size() && i1 < i; ++i1) {
-                    ChatLine chatline = drawnChatLines.get(i1 + scrollPos);
-
-                    if (chatline != null) {
-                        int j1 = updateCounter - chatline.getUpdatedCounter();
-
-                        if (j1 < 200 || flag) {
-                            double d0 = (double) j1 / 200.0D;
-                            d0 = 1.0D - d0;
-                            d0 = d0 * 10.0D;
-                            d0 = MathHelper.clamp_double(d0, 0.0D, 1.0D);
-                            d0 = d0 * d0;
-                            int l1 = (int) (255.0D * d0);
-
-                            if (flag) {
-                                l1 = 255;
-                            }
-
-                            l1 = (int) ((float) l1 * f);
-                            ++j;
-
-                            if (l1 > 3) {
-                                int i2 = 0;
-                                int j2 = -i1 * 9;
-                                if (!near.moduleManager.getModule("Transparent").isToggled()) {
-                                    drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
-                                }
-                                String s = chatline.getChatComponent().getFormattedText();
-                                GlStateManager.enableBlend();
-                                Fonts.font35.drawString(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
-                                GlStateManager.disableAlpha();
-                                GlStateManager.disableBlend();
-                            }
-                        }
-                    }
-                }
-
-                if (flag) {
-                    int k2 = Fonts.font35.FONT_HEIGHT;
-                    GlStateManager.translate(-3.0F, 0.0F, 0.0F);
-                    int l2 = k * k2 + k;
-                    int i3 = j * k2 + j;
-                    int j3 = scrollPos * i3 / k;
-                    int k1 = i3 * i3 / l2;
-
-                    if (l2 != i3) {
-                        int k3 = j3 > 0 ? 170 : 96;
-                        int l3 = isScrolled ? 13382451 : 3355562;
-                        if (!near.moduleManager.getModule("Transparent").isToggled()) {
-                            drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
-                            drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
-                        }
-                    }
-                }
-                GlStateManager.popMatrix();
-            }
-        }
-    }
-
-    @Shadow
-    public void scroll(int amount) {}
-
-    @Shadow
-    public void deleteChatLine(int id) {}
-
-    @Overwrite
-    private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly)
-    {
-        if (chatLineId != 0)
-        {
-            deleteChatLine(chatLineId);
-        }
-
-        int i = MathHelper.floor_float((float) getChatWidth() / getChatScale());
-        List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, mc.fontRendererObj, false, false);
-        boolean flag = getChatOpen();
-
-        for (IChatComponent ichatcomponent : list)
-        {
-            if (flag && scrollPos > 0)
-            {
-                isScrolled = true;
-                scroll(1);
-            }
-
-            drawnChatLines.add(0, new ChatLine(updateCounter, ichatcomponent, chatLineId));
-        }
-
-//        while (drawnChatLines.size() > 100)
-//        {
-//            drawnChatLines.remove(drawnChatLines.size() - 1);
-//        }
-
-        if (!displayOnly)
-        {
-            chatLines.add(0, new ChatLine(updateCounter, chatComponent, chatLineId));
-
-//            while (chatLines.size() > 100)
-//            {
-//                chatLines.remove(chatLines.size() - 1);
-//            }
-        }
-    }
-
 }

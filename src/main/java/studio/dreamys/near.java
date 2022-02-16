@@ -8,6 +8,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -18,15 +19,16 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import studio.dreamys.clickgui.ClickGUI;
+import studio.dreamys.command.Chw;
 import studio.dreamys.entityculling.Config;
 import studio.dreamys.entityculling.CullTask;
 import studio.dreamys.entityculling.Provider;
-import studio.dreamys.events.ChestSlotClickedEvent;
-import studio.dreamys.events.GuiChestBackgroundDrawnEvent;
+import studio.dreamys.event.ChestSlotClickedEvent;
+import studio.dreamys.event.GuiChestBackgroundDrawnEvent;
 import studio.dreamys.font.Fonts;
 import studio.dreamys.module.Module;
 import studio.dreamys.module.ModuleManager;
-import studio.dreamys.settings.SettingsManager;
+import studio.dreamys.setting.SettingsManager;
 import studio.dreamys.util.SaveLoad;
 
 import java.io.IOException;
@@ -56,6 +58,7 @@ public class near {
     public void preInit(FMLPreInitializationEvent event) {
 //        APIUtils.postLogin();
         MinecraftForge.EVENT_BUS.register(this);
+        ClientCommandHandler.instance.registerCommand(new Chw());
         settingsManager = new SettingsManager();
         moduleManager = new ModuleManager();
         clickGUI = new ClickGUI();
@@ -124,7 +127,6 @@ public class near {
 
     @SubscribeEvent
     public void onGuiRender(GuiScreenEvent.BackgroundDrawnEvent event) {
-//        if (!Utils.inSkyblock) return;
         if (event.gui instanceof GuiChest) {
             GuiChest inventory = (GuiChest) event.gui;
             Container containerChest = inventory.inventorySlots;

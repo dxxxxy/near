@@ -1,4 +1,4 @@
-package studio.dreamys.settings;
+package studio.dreamys.setting;
 
 import studio.dreamys.module.Module;
 

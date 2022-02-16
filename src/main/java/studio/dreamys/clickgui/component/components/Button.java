@@ -12,7 +12,7 @@ import studio.dreamys.clickgui.component.components.sub.ModeButton;
 import studio.dreamys.clickgui.component.components.sub.Slider;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 
 import java.awt.*;
 import java.io.IOException;

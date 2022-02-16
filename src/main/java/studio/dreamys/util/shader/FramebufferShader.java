@@ -20,7 +20,7 @@ import static org.lwjgl.opengl.GL20.glUseProgram;
  * @author TheSlowly
  */
 public abstract class FramebufferShader extends Shader {
-    public Minecraft mc = Minecraft.getMinecraft();
+    public final Minecraft mc = Minecraft.getMinecraft();
     private static Framebuffer framebuffer;
 
     protected float red, green, blue, alpha = 1F;
@@ -75,7 +75,6 @@ public abstract class FramebufferShader extends Shader {
     }
 
     /**
-     * @param frameBuffer
      * @return frameBuffer
      * @author TheSlowly
      */

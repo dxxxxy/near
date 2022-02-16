@@ -1,16 +1,15 @@
 package studio.dreamys.module.render;
 
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 import studio.dreamys.util.RenderUtils;
 
 import java.awt.*;
@@ -54,15 +53,14 @@ public class SlayerESP extends Module {
                     RenderUtils.drawTrace(slayer, Pattern.compile("tarantula broodfather|voidgloom seraph|(?:revenant|atoned) horror|sven packmaster").matcher(slayer.getName().toLowerCase()).find() ? Color.getHSBColor((System.currentTimeMillis() % 1000) / 1000F, 0.8F, 1F).getRGB() : Color.WHITE.getRGB(), e.partialTicks);
                 }
             });
+
             //unregister entity
             slayers.removeIf(slayer -> slayer.isDead);
         }
     }
 
     @SubscribeEvent
-    public void onChangeWorld(EntityJoinWorldEvent e) {
-        if (e.entity instanceof EntityPlayerSP) {
-            slayers.clear();
-        }
+    public void onChangeWorld(WorldEvent.Load e) {
+        slayers.clear();
     }
 }

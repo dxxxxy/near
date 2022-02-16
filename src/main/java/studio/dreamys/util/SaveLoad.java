@@ -3,7 +3,7 @@ package studio.dreamys.util;
 import net.minecraft.client.Minecraft;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 
 import java.io.*;
 import java.util.ArrayList;

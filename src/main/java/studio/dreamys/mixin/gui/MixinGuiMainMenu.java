@@ -16,8 +16,8 @@ public class MixinGuiMainMenu extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         RenderUtils.drawClientBackground(width, height);
 
-        Fonts.font35.drawString("near 1.8.9", 2, height - 10, -1);
-        Fonts.font35.drawString( "dxxxxy#0776", width - Fonts.font35.getStringWidth("dxxxxy#0776") - 2, height - 10, -1);
+        Fonts.font35RobotoMedium.drawString("near 1.8.9", 2, height - 10, -1);
+        Fonts.font35RobotoMedium.drawString( "dxxxxy#0776", width - Fonts.font35RobotoMedium.getStringWidth("dxxxxy#0776") - 2, height - 10, -1);
 
         Gui.drawRect(width / 2 - 115, height / 4 + 35, width / 2 + 115, height / 4 + 175, Integer.MIN_VALUE);
 

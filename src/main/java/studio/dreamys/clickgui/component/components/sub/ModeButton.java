@@ -5,7 +5,7 @@ import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 import studio.dreamys.clickgui.component.Component;
 import studio.dreamys.clickgui.component.components.Button;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 
 @SuppressWarnings("DuplicatedCode")
 public class ModeButton extends Component {

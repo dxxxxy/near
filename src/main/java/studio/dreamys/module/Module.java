@@ -2,7 +2,7 @@ package studio.dreamys.module;
 
 import net.minecraftforge.common.MinecraftForge;
 import studio.dreamys.near;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 
 import java.io.IOException;
 

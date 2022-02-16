@@ -16,13 +16,13 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import studio.dreamys.events.ChestSlotClickedEvent;
-import studio.dreamys.events.GuiChestBackgroundDrawnEvent;
+import studio.dreamys.event.ChestSlotClickedEvent;
+import studio.dreamys.event.GuiChestBackgroundDrawnEvent;
 import studio.dreamys.font.Fonts;
 import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 import studio.dreamys.util.RenderUtils;
 
 import java.awt.*;
@@ -38,11 +38,11 @@ public class Solvers extends Module {
     }
 
     //Chronomatron
-    static int lastChronomatronRound = 0;
-    static List<String> chronomatronPattern = new ArrayList<>();
-    static int chronomatronMouseClicks = 0;
-    public static int CHRONOMATRON_NEXT = Color.GREEN.getRGB();
-    public static int CHRONOMATRON_NEXT_TO_NEXT = Color.RED.getRGB();
+    static int lastChronomatronRound;
+    static final List<String> chronomatronPattern = new ArrayList<>();
+    static int chronomatronMouseClicks;
+    public static final int CHRONOMATRON_NEXT = Color.GREEN.getRGB();
+    public static final int CHRONOMATRON_NEXT_TO_NEXT = Color.RED.getRGB();
 
     @SubscribeEvent
     public void onSlotClick(ChestSlotClickedEvent event) {
@@ -106,7 +106,7 @@ public class Solvers extends Module {
             Minecraft mc = Minecraft.getMinecraft();
             ScaledResolution sr = new ScaledResolution(mc);
             int guiLeft = (sr.getScaledWidth() - 176) / 2;
-            Fonts.font35.drawString(String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
+            Fonts.font35RobotoMedium.drawString(String.join("\n", chronomatronPattern), (int) (guiLeft * 0.8), 10, 1);
         }
 
         if (near.settingsManager.getSettingByName(this, "Superpairs").getValBoolean() && event.displayName.contains("Superpairs (")) {
@@ -147,9 +147,7 @@ public class Solvers extends Module {
                 ArrayList<Slot> slots = new ArrayList<>();
                 slotSet.forEach(slotNum -> slots.add(event.slots.get(slotNum)));
                 Color color = colorIterator.next();
-                slots.forEach(slot -> {
-                    RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, color.getRGB());
-                });
+                slots.forEach(slot -> RenderUtils.drawOnSlot(event.chestSize, slot.xDisplayPosition, slot.yDisplayPosition, color.getRGB()));
             });
         }
 
@@ -277,7 +275,7 @@ public class Solvers extends Module {
 
     //Ultrasequencer
     static Slot[] clickInOrderSlots = new Slot[36];
-    static int lastUltraSequencerClicked = 0;
-    public static int ULTRASEQUENCER_NEXT = Color.GREEN.getRGB();
-    public static int ULTRASEQUENCER_NEXT_TO_NEXT = Color.RED.getRGB();
+    static int lastUltraSequencerClicked;
+    public static final int ULTRASEQUENCER_NEXT = Color.GREEN.getRGB();
+    public static final int ULTRASEQUENCER_NEXT_TO_NEXT = Color.RED.getRGB();
 }

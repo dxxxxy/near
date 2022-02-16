@@ -21,9 +21,10 @@ import java.awt.image.BufferedImage
  * Generate new bitmap based font renderer
  */
 @SideOnly(Side.CLIENT)
-class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, var loadingScreen: Boolean = false) {
+class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, private var loadingScreen: Boolean = false) {
     companion object {
-        val mc: Minecraft = Minecraft.getMinecraft();
+        val mc: Minecraft = Minecraft.getMinecraft()
+
         var assumeNonVolatile: Boolean = false
         val activeFontRenderers: ArrayList<AWTFontRenderer> = ArrayList()
 
@@ -87,7 +88,7 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
         GL11.glTranslated(x * 2F, y * 2.0 - 2.0, 0.0)
 
         if (this.loadingScreen)
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID)
         else
             GlStateManager.bindTexture(textureID)
 
@@ -134,7 +135,7 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
                 GL11.glScaled(scale, scale, scale)
 
                 if (this.loadingScreen)
-                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID)
                 else
                     GlStateManager.bindTexture(textureID)
 
@@ -144,7 +145,7 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
             } else {
                 val fontChar = charLocations[char.toInt()] ?: continue
 
-                drawChar(fontChar, currX.toFloat(), 0f)
+                drawChar(fontChar, currX.toFloat())
                 currX += fontChar.width - 8.0
             }
         }
@@ -164,9 +165,8 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
      *
      * @param char target font char to render
      * @param x        target position x to render
-     * @param y        target position y to render
      */
-    private fun drawChar(char: CharLocation, x: Float, y: Float) {
+    private fun drawChar(char: CharLocation, x: Float) {
         val width = char.width.toFloat()
         val height = char.height.toFloat()
         val srcX = char.x.toFloat()
@@ -177,13 +177,13 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
         val renderHeight = height / textureHeight
 
         GL11.glTexCoord2f(renderX, renderY)
-        GL11.glVertex2f(x, y)
+        GL11.glVertex2f(x, 0F)
         GL11.glTexCoord2f(renderX, renderY + renderHeight)
-        GL11.glVertex2f(x, y + height)
+        GL11.glVertex2f(x, height)
         GL11.glTexCoord2f(renderX + renderWidth, renderY + renderHeight)
-        GL11.glVertex2f(x + width, y + height)
+        GL11.glVertex2f(x + width, height)
         GL11.glTexCoord2f(renderX + renderWidth, renderY)
-        GL11.glVertex2f(x + width, y)
+        GL11.glVertex2f(x + width, 0F)
     }
 
     /**
@@ -291,7 +291,7 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, v
         return width / 2
     }
 
-    fun delete() {
+    private fun delete() {
         if (textureID != -1) {
             GL11.glDeleteTextures(textureID)
             textureID = -1

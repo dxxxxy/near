@@ -1,4 +1,4 @@
-package studio.dreamys.events;
+package studio.dreamys.event;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 

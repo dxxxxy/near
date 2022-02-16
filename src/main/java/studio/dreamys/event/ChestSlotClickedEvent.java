@@ -1,4 +1,4 @@
-package studio.dreamys.events;
+package studio.dreamys.event;
 
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.IInventory;

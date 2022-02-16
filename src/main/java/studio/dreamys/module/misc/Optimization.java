@@ -2,7 +2,7 @@ package studio.dreamys.module.misc;
 
 import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 
 public class Optimization extends Module {
     public Optimization() {

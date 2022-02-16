@@ -17,7 +17,7 @@ import org.lwjgl.opengl.GL11;
 import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
-import studio.dreamys.settings.Setting;
+import studio.dreamys.setting.Setting;
 
 public class Map extends Module {
     public Map() {

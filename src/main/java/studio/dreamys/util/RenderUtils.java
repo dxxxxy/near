@@ -1,6 +1,7 @@
 package studio.dreamys.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,9 +11,11 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.util.shader.shaders.BackgroundShader;
 
 import java.awt.*;
@@ -204,5 +207,69 @@ public class RenderUtils {
         GL11.glTranslated(0, 0, 1);
         Gui.drawRect(x, y, x + 16, y + 16, colour);
         GL11.glTranslated(0, 0, -1);
+    }
+
+    public static void drawNametag(String str) {
+        FontRenderer fontRenderer = Fonts.font40RobotoMedium;
+        float f1 = 0.02666667f;
+        GlStateManager.pushMatrix();
+        glNormal3f(0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f);
+        GlStateManager.scale(-f1, -f1, f1);
+        GlStateManager.disableLighting();
+        GlStateManager.depthMask(false);
+        GlStateManager.disableDepth();
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        int i = 0;
+        int j = fontRenderer.getStringWidth(str) / 2;
+        GlStateManager.disableTexture2D();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(-j - 1, -1 + i, 0.0).color(0.0f, 0.0f, 0.0f, 0.25f).endVertex();
+        worldrenderer.pos(-j - 1, 8 + i, 0.0).color(0.0f, 0.0f, 0.0f, 0.25f).endVertex();
+        worldrenderer.pos(j + 1, 8 + i, 0.0).color(0.0f, 0.0f, 0.0f, 0.25f).endVertex();
+        worldrenderer.pos(j + 1, -1 + i, 0.0).color(0.0f, 0.0f, 0.0f, 0.25f).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        fontRenderer.drawString(str, -j, i, 553648127);
+        GlStateManager.depthMask(true);
+        fontRenderer.drawString(str, -j, i, -1);
+        GlStateManager.enableDepth();
+        GlStateManager.enableBlend();
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        GlStateManager.popMatrix();
+    }
+
+    public static void renderWaypointText(String str, BlockPos loc, float partialTicks) {
+        GlStateManager.alphaFunc(516, 0.1f);
+        GlStateManager.pushMatrix();
+        Entity viewer = mc.getRenderViewEntity();
+        double viewerX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
+        double viewerY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
+        double viewerZ = viewer.lastTickPosZ + (viewer.posZ - viewer.lastTickPosZ) * partialTicks;
+        double x = loc.getX() - viewerX;
+        double y = loc.getY() - viewerY - viewer.getEyeHeight();
+        double z = loc.getZ() - viewerZ;
+        double distSq = x * x + y * y + z * z;
+        double dist = Math.sqrt(distSq);
+        if (distSq > 144) {
+            x *= 12 / dist;
+            y *= 12 / dist;
+            z *= 12 / dist;
+        }
+        GlStateManager.translate(x, y, z);
+        GlStateManager.translate(0f, viewer.getEyeHeight(), 0f);
+        drawNametag(str);
+        GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f);
+        GlStateManager.translate(0f, -0.25f, 0f);
+        GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1.0f, 0.0f, 0.0f);
+        GlStateManager.rotate(mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
+        drawNametag(Math.ceil(dist) + "m");
+        GlStateManager.popMatrix();
+        GlStateManager.disableLighting();
     }
 }

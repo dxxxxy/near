@@ -7,18 +7,19 @@
     "client.MixinMinecraft",
     "entity.CullableMixin",
     "gui.MixinGuiButton",
-    "gui.MixinGuiButtonExt",
     "gui.MixinGuiChat",
     "gui.MixinGuiConnecting",
-    "gui.MixinGuiDownloadTerrain",
+    "gui.MixinGuiIngameMenu",
     "gui.MixinGuiMainMenu",
     "gui.MixinGuiNewChat",
     "gui.MixinGuiOverlayDebug",
     "gui.MixinGuiScreen",
     "gui.MixinGuiSlot",
-    "gui.MixinMinecraft",
     "render.MixinRender",
     "render.MixinRenderManager",
     "render.MixinTileEntityRendererDispatcher"
+  ],
+  "mixins": [
+    "gui.MixinGuiIngame"
   ]
 }
