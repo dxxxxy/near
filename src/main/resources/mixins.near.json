@@ -9,6 +9,8 @@
     "gui.MixinGuiButton",
     "gui.MixinGuiChat",
     "gui.MixinGuiConnecting",
+    "gui.MixinGuiIngame",
+    "gui.MixinGuiIngameForge",
     "gui.MixinGuiIngameMenu",
     "gui.MixinGuiMainMenu",
     "gui.MixinGuiNewChat",
@@ -18,8 +20,5 @@
     "render.MixinRender",
     "render.MixinRenderManager",
     "render.MixinTileEntityRendererDispatcher"
-  ],
-  "mixins": [
-    "gui.MixinGuiIngame"
   ]
 }

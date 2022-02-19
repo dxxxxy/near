@@ -48,6 +48,8 @@ public class MixinGuiIngameMenu extends GuiScreen {
         }
 
         if (button.id == 6) {
+            mc.theWorld.sendQuittingDisconnectingPacket();
+            mc.loadWorld(null);
             if (mc.isIntegratedServerRunning()) {
                 mc.displayGuiScreen(new GuiMainMenu());
             }
