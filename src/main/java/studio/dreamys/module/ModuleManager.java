@@ -6,7 +6,7 @@ import studio.dreamys.module.cosmetics.DragonWings;
 import studio.dreamys.module.dungeons.Map;
 import studio.dreamys.module.hud.ClickGUI;
 import studio.dreamys.module.hud.Font;
-import studio.dreamys.module.hud.SummonsHUD;
+import studio.dreamys.module.hud.Summons;
 import studio.dreamys.module.mines.AutoLoot;
 import studio.dreamys.module.mines.CoordsGrabber;
 import studio.dreamys.module.misc.KneeSurgery;
@@ -32,7 +32,7 @@ public class ModuleManager {
         modules.add(new Fullbright());
         modules.add(new Map());
         modules.add(new ShortDamage());
-        modules.add(new SummonsHUD());
+        modules.add(new Summons());
         modules.add(new Hide());
         modules.add(new Optimization());
         modules.add(new ItemOutlines());

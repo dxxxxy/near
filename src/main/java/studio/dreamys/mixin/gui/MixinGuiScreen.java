@@ -18,14 +18,11 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import studio.dreamys.font.Fonts;
-import studio.dreamys.near;
 import studio.dreamys.util.ParticleUtils;
 import studio.dreamys.util.shader.shaders.BackgroundShader;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,10 +115,10 @@ public abstract class MixinGuiScreen extends Gui {
         drawHoveringText(list, x, y, Fonts.font35MontserratMedium);
     }
 
-    @Redirect(method = "setWorldAndResolution", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;fontRendererObj:Lnet/minecraft/client/gui/FontRenderer;"))
-    public FontRenderer customFont(Minecraft instance) throws NoSuchFieldException, IllegalAccessException {
-        Field field = near.moduleManager.getModule("Font").getClass().getDeclaredField("font");
-        field.setAccessible(true);
-        return (FontRenderer) field.get(near.moduleManager.getModule("Font"));
-    }
+//    @Redirect(method = "setWorldAndResolution", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;fontRendererObj:Lnet/minecraft/client/gui/FontRenderer;"))
+//    public FontRenderer customFont(Minecraft instance) throws NoSuchFieldException, IllegalAccessException {
+//        Field field = near.moduleManager.getModule("Font").getClass().getDeclaredField("font");
+//        field.setAccessible(true);
+//        return (FontRenderer) field.get(near.moduleManager.getModule("Font"));
+//    }
 }
