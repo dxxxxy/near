@@ -5,6 +5,7 @@ import studio.dreamys.module.chat.Hide;
 import studio.dreamys.module.cosmetics.DragonWings;
 import studio.dreamys.module.dungeons.Map;
 import studio.dreamys.module.hud.ClickGUI;
+import studio.dreamys.module.hud.Font;
 import studio.dreamys.module.hud.SummonsHUD;
 import studio.dreamys.module.mines.AutoLoot;
 import studio.dreamys.module.mines.CoordsGrabber;
@@ -38,6 +39,7 @@ public class ModuleManager {
         modules.add(new Solvers());
         modules.add(new CoordsGrabber());
         modules.add(new AutoLoot());
+        modules.add(new Font());
 
         //this has to be the last
         modules.add(new Compact());

@@ -2,7 +2,6 @@ package studio.dreamys.mixin.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.boss.BossStatus;
@@ -19,7 +18,7 @@ import java.awt.*;
 import java.util.Objects;
 
 @Mixin(GuiIngame.class)
-public class MixinGuiIngame extends Gui {
+public class MixinGuiIngame {
 
     @Overwrite //custom font
     public FontRenderer getFontRenderer() {

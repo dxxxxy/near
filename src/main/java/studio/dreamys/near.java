@@ -57,8 +57,10 @@ public class near {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 //        APIUtils.postLogin();
+        Fonts.loadFonts();
         MinecraftForge.EVENT_BUS.register(this);
         ClientCommandHandler.instance.registerCommand(new Chw());
+
         settingsManager = new SettingsManager();
         moduleManager = new ModuleManager();
         clickGUI = new ClickGUI();
@@ -73,8 +75,6 @@ public class near {
             ex.printStackTrace();
         });
         cullThread.start();
-
-        Fonts.loadFonts();
     }
 
     @SubscribeEvent

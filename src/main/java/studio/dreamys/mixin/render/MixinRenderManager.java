@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.util.AxisAlignedBB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -41,12 +42,17 @@ public abstract class MixinRenderManager {
     public abstract <T extends Entity> Render<T> getEntityRenderObject(Entity p_getEntityRenderObject_1_);
 
     @Inject(at = @At("HEAD"), method = "doRenderEntity", cancellable = true)
-    public void doRenderEntity(Entity entity, double p_doRenderEntity_2_, double d1, double d2,
-            float tickDelta, float p_doRenderEntity_9_, boolean p_doRenderEntity_10_, CallbackInfoReturnable<Boolean> info) {
+    public void doRenderEntity(Entity entity, double p_doRenderEntity_2_, double d1, double d2, float tickDelta, float p_doRenderEntity_9_, boolean p_doRenderEntity_10_, CallbackInfoReturnable<Boolean> info) {
         Cullable cullable = (Cullable) entity;
+        if (entity instanceof EntityWither) {
+            System.out.println(((EntityWither) entity).getRenderSizeModifier());
+        }
         if (cullable.isForcedVisible() && cullable.isCulled()) {
             //noinspection unchecked
             EntityRendererInter<Entity> entityRenderer = (EntityRendererInter<Entity>) getEntityRenderObject(entity);
+            if (entity instanceof EntityWither) {
+                System.out.println(((EntityWither) entity).getRenderSizeModifier());
+            }
             if (Config.renderNametagsThroughWalls && entityRenderer.shadowShouldShowName(entity)) {
                 entityRenderer.shadowRenderNameTag(entity, p_doRenderEntity_2_, d1, d2);
             }

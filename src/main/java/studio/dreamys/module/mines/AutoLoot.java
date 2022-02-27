@@ -1,6 +1,5 @@
 package studio.dreamys.module.mines;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
@@ -10,6 +9,7 @@ import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
 import studio.dreamys.near;
 import studio.dreamys.setting.Setting;
+import studio.dreamys.util.PlayerUtils;
 
 public class AutoLoot extends Module {
     public AutoLoot() {
@@ -28,7 +28,7 @@ public class AutoLoot extends Module {
                     new Thread(() -> {
                         try {
                             Thread.sleep((long) near.settingsManager.getSettingByName(this, "Delay").getValDouble());
-                            Minecraft.getMinecraft().displayGuiScreen(null);
+                            PlayerUtils.player.closeScreen();
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }

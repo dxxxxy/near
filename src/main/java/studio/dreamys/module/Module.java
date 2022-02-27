@@ -34,6 +34,10 @@ public class Module {
         near.settingsManager.rSetting(set);
     }
 
+    public Setting getSetting(String name) {
+        return near.settingsManager.getSettingByName(this, name);
+    }
+
     public boolean isToggled() {
         return toggled;
     }
@@ -64,6 +68,10 @@ public class Module {
         if (near.saveLoad != null) {
             near.saveLoad.save();
         }
+    }
+
+    public void modeChanged() {
+
     }
 
     public void onEnable() throws IOException {
