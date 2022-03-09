@@ -114,11 +114,4 @@ public abstract class MixinGuiScreen extends Gui {
 
         drawHoveringText(list, x, y, Fonts.font35MontserratMedium);
     }
-
-//    @Redirect(method = "setWorldAndResolution", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;fontRendererObj:Lnet/minecraft/client/gui/FontRenderer;"))
-//    public FontRenderer customFont(Minecraft instance) throws NoSuchFieldException, IllegalAccessException {
-//        Field field = near.moduleManager.getModule("Font").getClass().getDeclaredField("font");
-//        field.setAccessible(true);
-//        return (FontRenderer) field.get(near.moduleManager.getModule("Font"));
-//    }
 }

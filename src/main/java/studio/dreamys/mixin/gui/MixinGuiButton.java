@@ -1,7 +1,6 @@
 package studio.dreamys.mixin.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -56,7 +55,6 @@ public abstract class MixinGuiButton {
     @Overwrite
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
-            FontRenderer fr = Fonts.font35RobotoMedium;
             hovered = (mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height);
 
             int delta = RenderUtils.deltaTime;
@@ -82,7 +80,7 @@ public abstract class MixinGuiButton {
 
             AWTFontRenderer.Companion.setAssumeNonVolatile(true);
 
-            fr.drawString(displayString, (float) ((xPosition + width / 2) - fr.getStringWidth(displayString) / 2), yPosition + (height - 5) / 2F, 14737632, false);
+            Fonts.font35RobotoMedium.drawString(displayString, (float) ((xPosition + width / 2) - Fonts.font35RobotoMedium.getStringWidth(displayString) / 2), yPosition + (height - 5) / 2F, 14737632, false);
 
             AWTFontRenderer.Companion.setAssumeNonVolatile(false);
 

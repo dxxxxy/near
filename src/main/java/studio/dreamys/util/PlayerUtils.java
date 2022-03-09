@@ -3,7 +3,10 @@ package studio.dreamys.util;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.ChatComponentText;
+
+import java.util.List;
 
 public class PlayerUtils {
     public static final String prefix = "§b§l[§f§lnear§b§l]§r ";
@@ -40,5 +43,30 @@ public class PlayerUtils {
         }
 
         player.addChatComponentMessage(new ChatComponentText(prefix + msg));
+    }
+
+    public static boolean inDungeons() {
+        if (inSkyblock()) {
+            List<String> scoreboard = ScoreboardHandler.getSidebarLines();
+            for (String s : scoreboard) {
+                String sCleaned = ScoreboardHandler.cleanSB(s);
+                if (sCleaned.contains("The Catacombs")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean inSkyblock() {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc != null && mc.theWorld != null && !mc.isSingleplayer()) {
+            ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
+            if (scoreboardObj != null) {
+                String scObjName = ScoreboardHandler.cleanSB(scoreboardObj.getDisplayName());
+                return scObjName.contains("SKYBLOCK");
+            }
+        }
+        return false;
     }
 }

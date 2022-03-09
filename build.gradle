@@ -148,7 +148,3 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
-
-configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor 0, "seconds"
-}

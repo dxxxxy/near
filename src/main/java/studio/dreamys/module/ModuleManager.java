@@ -3,6 +3,7 @@ package studio.dreamys.module;
 import studio.dreamys.module.chat.Compact;
 import studio.dreamys.module.chat.Hide;
 import studio.dreamys.module.cosmetics.DragonWings;
+import studio.dreamys.module.dungeons.AutoCloseChest;
 import studio.dreamys.module.dungeons.Map;
 import studio.dreamys.module.hud.ClickGUI;
 import studio.dreamys.module.hud.Font;
@@ -40,6 +41,7 @@ public class ModuleManager {
         modules.add(new CoordsGrabber());
         modules.add(new AutoLoot());
         modules.add(new Font());
+        modules.add(new AutoCloseChest());
 
         //this has to be the last
         modules.add(new Compact());

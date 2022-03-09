@@ -2,23 +2,40 @@ package studio.dreamys.mixin.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.Sys;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import studio.dreamys.accessor.AccessMinecraft;
+import studio.dreamys.font.Fonts;
 import studio.dreamys.util.RenderUtils;
 
 @Mixin(Minecraft.class)
-public class MixinMinecraft {
+public class MixinMinecraft implements AccessMinecraft {
 
     @Shadow
     private int rightClickDelayTimer;
 
+    @Unique
+    public FontRenderer mcFontRendererObj;
+
     @Shadow
     public FontRenderer fontRendererObj;
+
+    @Shadow
+    public GameSettings gameSettings;
+
+    @Shadow
+    public TextureManager renderEngine;
 
     private long lastFrame = getTime();
     Minecraft mc = Minecraft.getMinecraft();
@@ -31,88 +48,34 @@ public class MixinMinecraft {
 
         RenderUtils.deltaTime = deltaTime;
     }
+
+    @Redirect(method = "startGame", at = @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;fontRendererObj:Lnet/minecraft/client/gui/FontRenderer;", opcode = Opcodes.PUTFIELD))
+    public void customFont(Minecraft instance, FontRenderer value) {
+        fontRendererObj = Fonts.font35MontserratMedium;
+        mcFontRendererObj = new FontRenderer(gameSettings, new ResourceLocation("textures/font/ascii.png"), renderEngine, false);
+    }
+
+//    ArrayList<KeyBinding> keybindArray = new ArrayList<>();
 //
-//    @Shadow @Final private static Logger logger;
-//    @Shadow public PlayerControllerMP playerController;
-//    @Shadow public WorldClient theWorld;
-//    @Shadow public EntityPlayerSP thePlayer;
-//    @Shadow public MovingObjectPosition objectMouseOver;
-//    @Shadow public EntityRenderer entityRenderer;
-//
-//    @Overwrite
-//    private void rightClickMouse()
-//    {
-//        if (!playerController.getIsHittingBlock())
-//        {
-//            rightClickDelayTimer = 4;
-//            boolean flag = true;
-//            ItemStack itemstack = thePlayer.inventory.getCurrentItem();
-//
-//            if (objectMouseOver == null)
-//            {
-//                logger.warn("Null returned as 'hitResult', this shouldn't happen!");
-//            }
-//            else
-//            {
-//                switch (objectMouseOver.typeOfHit)
-//                {
-//                    case ENTITY:
-//                        if (objectMouseOver.entityHit instanceof EntityArmorStand) break;
-//                        if (playerController.isPlayerRightClickingOnEntity(thePlayer, objectMouseOver.entityHit, objectMouseOver))
-//                        {
-//                            flag = false;
-//                        }
-//                        else if (playerController.interactWithEntitySendPacket(thePlayer, objectMouseOver.entityHit))
-//                        {
-//                            flag = false;
-//                        }
-//
-//                        break;
-//                    case BLOCK:
-//                        BlockPos blockpos = objectMouseOver.getBlockPos();
-//
-//                        if (!theWorld.isAirBlock(blockpos))
-//                        {
-//                            int i = itemstack != null ? itemstack.stackSize : 0;
-//
-//
-//                            boolean result = !net.minecraftforge.event.ForgeEventFactory.onPlayerInteract(thePlayer, net.minecraftforge.event.entity.player.PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK, theWorld, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec).isCanceled();
-//                            if (result) { //Forge: Kept separate to simplify patch
-//                                if (playerController.onPlayerRightClick(thePlayer, theWorld, itemstack, blockpos, objectMouseOver.sideHit, objectMouseOver.hitVec))
-//                                {
-//                                    flag = false;
-//                                    thePlayer.swingItem();
-//                                }
-//                            }
-//
-//                            if (itemstack == null)
-//                            {
-//                                return;
-//                            }
-//
-//                            if (itemstack.stackSize == 0)
-//                            {
-//                                thePlayer.inventory.mainInventory[thePlayer.inventory.currentItem] = null;
-//                            }
-//                            else if (itemstack.stackSize != i || playerController.isInCreativeMode())
-//                            {
-//                                this.entityRenderer.itemRenderer.resetEquippedProgress();
-//                            }
-//                        }
-//                }
-//            }
-//
-//            if (flag)
-//            {
-//                ItemStack itemstack1 = thePlayer.inventory.getCurrentItem();
-//
-//                boolean result = !net.minecraftforge.event.ForgeEventFactory.onPlayerInteract(thePlayer, net.minecraftforge.event.entity.player.PlayerInteractEvent.Action.RIGHT_CLICK_AIR, theWorld, null, null, null).isCanceled();
-//                if (result && itemstack1 != null && playerController.sendUseItem(thePlayer, theWorld, itemstack1))
-//                {
-//                    this.entityRenderer.itemRenderer.resetEquippedProgress2();
-//                }
-//            }
+//    @Inject(method = "setIngameNotInFocus", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/settings/KeyBinding;unPressAllKeys()V"))
+//    public void setIngameNotInFocus(CallbackInfo ci) {
+//        keybindArray.clear();
+//        for (KeyBinding binding : KeyBinding.keybindArray) {
+//            keybindArray.add(clone(binding));
 //        }
+//        PlayerUtils.addMessage("called1");
+//    }
+//
+//    public KeyBinding clone(KeyBinding key) {
+//        return new KeyBinding(key.getKeyDescription(), key.getKeyCode(), key.getKeyCategory());
+//    }
+//
+//    @Inject(method = "setIngameFocus", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V", shift = At.Shift.AFTER))
+//    public void setIngameFocus(CallbackInfo ci) {
+//        KeyBinding.keybindArray.clear();
+//        KeyBinding.keybindArray.addAll(keybindArray);
+//        keybindArray.clear();
+//        PlayerUtils.addMessage("called2");
 //    }
 
     @Overwrite
@@ -122,5 +85,10 @@ public class MixinMinecraft {
 
     public long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+    }
+
+    @Override
+    public FontRenderer getMcFontRendererObj() {
+        return mcFontRendererObj;
     }
 }

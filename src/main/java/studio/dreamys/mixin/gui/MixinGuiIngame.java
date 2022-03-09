@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import studio.dreamys.font.Fonts;
 
 import java.awt.*;
 import java.util.Objects;
@@ -20,10 +19,10 @@ import java.util.Objects;
 @Mixin(GuiIngame.class)
 public class MixinGuiIngame {
 
-    @Overwrite //custom font
-    public FontRenderer getFontRenderer() {
-        return Fonts.font35MontserratMedium;
-    }
+//    @Overwrite //custom font
+//    public FontRenderer getFontRenderer() {
+//        return Fonts.font35MontserratMedium;
+//    }
 
     @Redirect(method = "renderScoreboard", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiIngame;drawRect(IIIII)V"))
     public void transparentBackground(int a, int b, int c, int d, int e) {

@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.TextureUtil
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
 import org.lwjgl.opengl.GL11
+import studio.dreamys.accessor.AccessMinecraft
 import java.awt.Color
 import java.awt.Font
 import java.awt.Graphics2D
@@ -129,9 +130,8 @@ class AWTFontRenderer(val font: Font, startChar: Int = 0, stopChar: Int = 255, p
 
                 // Ugly solution, because floating point numbers, but I think that shouldn't be that much of a problem
                 GL11.glScaled(reverse, reverse, reverse)
-                mc.fontRendererObj.drawString("$char", currX.toFloat() * scale.toFloat() + 1, 2f, color, false)
-                currX += mc.fontRendererObj.getStringWidth("$char") * reverse
-
+                (mc as AccessMinecraft).getMcFontRendererObj().drawString("$char", currX.toFloat() * scale.toFloat() + 1, 2f, color, false)
+                currX += (mc as AccessMinecraft).getMcFontRendererObj().getStringWidth("$char") * reverse
                 GL11.glScaled(scale, scale, scale)
 
                 if (this.loadingScreen)
