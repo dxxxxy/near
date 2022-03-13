@@ -22,7 +22,7 @@ public class AutoCloseChest extends Module {
             Container containerChest = gui.inventorySlots;
             if (containerChest instanceof ContainerChest) {
                 String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
-                PlayerUtils.addMessage(displayName);
+//                PlayerUtils.addMessage(displayName);
                 if (displayName.equals("Chest")) {
                     PlayerUtils.player.closeScreen();
                 }

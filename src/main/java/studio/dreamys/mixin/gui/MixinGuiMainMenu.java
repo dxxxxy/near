@@ -4,6 +4,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.resources.I18n;
+import net.minecraftforge.fml.client.GuiModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import studio.dreamys.font.Fonts;
@@ -47,9 +48,9 @@ public class MixinGuiMainMenu extends GuiScreen {
 //            this.mc.displayGuiScreen(new GuiCredits(this));
 //        }
 //
-//        if (button.id == 1) {
-//            this.mc.displayGuiScreen(new GuiModList(this));
-//        }
+        if (button.id == 1) {
+            this.mc.displayGuiScreen(new GuiModList(this));
+        }
 //
 //        if (button.id == 2) {
 //            this.mc.displayGuiScreen(new GuiServerStatus(this));

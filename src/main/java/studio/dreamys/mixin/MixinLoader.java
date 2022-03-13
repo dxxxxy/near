@@ -5,6 +5,7 @@ import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.Mixins;
 import studio.dreamys.asm.ClassTransformer;
+import studio.dreamys.asm.ForgeNetworkTransformer;
 
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class MixinLoader implements IFMLLoadingPlugin {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[]{"", ClassTransformer.class.getName()};
+        return new String[]{"", ClassTransformer.class.getName(), ForgeNetworkTransformer.class.getName()};
     }
 
     @Override

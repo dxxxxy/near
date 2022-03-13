@@ -17,6 +17,8 @@
     "gui.MixinGuiOverlayDebug",
     "gui.MixinGuiScreen",
     "gui.MixinGuiSlot",
+    "network.MixinNetHandlerPlayClient",
+    "packets.MixinC00Handshake",
     "render.MixinRender",
     "render.MixinRenderManager",
     "render.MixinTileEntityRendererDispatcher"
