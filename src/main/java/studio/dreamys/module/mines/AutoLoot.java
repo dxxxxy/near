@@ -7,14 +7,11 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import studio.dreamys.module.Category;
 import studio.dreamys.module.Module;
-import studio.dreamys.near;
-import studio.dreamys.setting.Setting;
 import studio.dreamys.util.PlayerUtils;
 
 public class AutoLoot extends Module {
     public AutoLoot() {
         super("AutoLoot", Category.MINES);
-        set(new Setting("Delay", this, 250, 100, 1000, false));
     }
 
     @SubscribeEvent
@@ -25,14 +22,7 @@ public class AutoLoot extends Module {
             if (containerChest instanceof ContainerChest) {
                 String displayName = ((ContainerChest) containerChest).getLowerChestInventory().getDisplayName().getUnformattedText().trim();
                 if (displayName.contains("Loot Chest")) {
-                    new Thread(() -> {
-                        try {
-                            Thread.sleep((long) near.settingsManager.getSettingByName(this, "Delay").getValDouble());
-                            PlayerUtils.player.closeScreen();
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-                    }).start();
+                    PlayerUtils.player.closeScreen();
                 }
             }
         }

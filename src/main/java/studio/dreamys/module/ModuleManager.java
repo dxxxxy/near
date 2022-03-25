@@ -13,6 +13,7 @@ import studio.dreamys.module.mines.CoordsGrabber;
 import studio.dreamys.module.misc.KneeSurgery;
 import studio.dreamys.module.misc.Optimization;
 import studio.dreamys.module.misc.Solvers;
+import studio.dreamys.module.misc.WindowedFullscreen;
 import studio.dreamys.module.movement.KeepSprint;
 import studio.dreamys.module.render.Fullbright;
 import studio.dreamys.module.render.ItemOutlines;
@@ -42,6 +43,7 @@ public class ModuleManager {
         modules.add(new AutoLoot());
         modules.add(new Font());
         modules.add(new AutoCloseChest());
+        modules.add(new WindowedFullscreen());
 
         //this has to be the last
         modules.add(new Compact());
