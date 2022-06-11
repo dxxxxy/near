@@ -8,7 +8,6 @@ import studio.dreamys.module.dungeons.Map;
 import studio.dreamys.module.hud.ClickGUI;
 import studio.dreamys.module.hud.Font;
 import studio.dreamys.module.hud.Summons;
-import studio.dreamys.module.mines.AutoLoot;
 import studio.dreamys.module.mines.CoordsGrabber;
 import studio.dreamys.module.misc.KneeSurgery;
 import studio.dreamys.module.misc.Optimization;
@@ -40,7 +39,6 @@ public class ModuleManager {
         modules.add(new ItemOutlines());
         modules.add(new Solvers());
         modules.add(new CoordsGrabber());
-        modules.add(new AutoLoot());
         modules.add(new Font());
         modules.add(new AutoCloseChest());
         modules.add(new WindowedFullscreen());
